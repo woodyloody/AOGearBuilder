@@ -55,6 +55,10 @@
 
 	let filterType = 'all';
 	let sortType = 'default';
+
+	export let title = "AO Gear Builder"
+
+	export let image = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>em{color:red;}</style><em>I</em> like <span>AO</span></div></foreignObject></svg>')
 </script>
 
 <svelte:head>
@@ -66,9 +70,9 @@
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://tools.arcaneodyssey.net/" />
-	<meta property="og:title" content="Gear Builder" />
+	<meta property="og:title" content={title} />
 	<meta property="og:description" content="Gear Builder for Arcane Odyssey by BobbyNooby" />
-	<meta property="og:image" content="https://i.imgur.com/axkyVz8.png" />
+	<meta property="og:image" content={image} />
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
