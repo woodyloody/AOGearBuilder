@@ -1,0 +1,27 @@
+{
+	"/": [
+		"src/routes/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/gearBuilder": [
+		"src/routes/gearBuilder/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/info": [
+		"src/routes/info/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/potionBuilder": [
+		"src/routes/potionBuilder/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/shipBuilder": [
+		"src/routes/shipBuilder/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	]
+}
