@@ -1,8 +1,6 @@
 {
-    "success": true,
-    "type": "rich",
-    "version": "1.0",
-    "height": "300",
-    "width": "320",
-    "html": "<p>test</p>"
-  }
+    "author_name": "It's time to ditch Skype and TeamSpeak.",
+    "author_url": "https://discordapp.com",
+    "provider_name": "We are hiring! Click here to join us.",
+    "provider_url": "https://discordapp.com/jobs"
+ }
