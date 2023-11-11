@@ -1,6 +1,10 @@
 {
+    "type": "rich",
     "author_name": "It's time to ditch Skype and TeamSpeak.",
     "author_url": "https://discordapp.com",
     "provider_name": "We are hiring! Click here to join us.",
-    "provider_url": "https://discordapp.com/jobs"
- }
+    "provider_url": "https://discordapp.com/jobs",
+    "html":"<iframe id=\"cp_embed_dPrEvP\" src=\"https://codepen.io/luizotcarvalho/embed/preview/dPrEvP?default-tabs=css%2Cresult&amp;height=300&amp;host=https%3A%2F%2Fcodepen.io&amp;slug-hash=dPrEvP\" title=\"Polygon hypnotism\" scrolling=\"no\" frameborder=\"0\" height=\"300\" allowtransparency=\"true\" class=\"cp_embed_iframe\" style=\"width: 100%; overflow: hidden;\"></iframe>",
+    "height": "300",
+    "width": "320"
+}
