@@ -26,6 +26,7 @@
 			failed = true;
 		};
 	});
+	console.log(item);
 </script>
 
 <div

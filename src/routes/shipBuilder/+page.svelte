@@ -1,10 +1,11 @@
 <script lang="ts">
-	import BuildLoadButton from '$lib/components/builders/BuildLoadButton.svelte';
-	import BuildSaveButton from '$lib/components/builders/BuildSaveButton.svelte';
-	import BuildsOverrideButton from '$lib/components/builders/BuildsOverrideButton.svelte';
+	import BuildLoadButton from '$lib/components/Builders/BuildLoadButton.svelte';
+	import BuildSaveButton from '$lib/components/Builders/BuildSaveButton.svelte';
+	import BuildsOverrideButton from '$lib/components/Builders/BuildsOverrideButton.svelte';
 	import GearButton from '$lib/components/Builders/GearButton.svelte';
 	import ItemTooltip from '$lib/components/Builders/ItemTooltip.svelte';
-	import RandomButton from '$lib/components/builders/RandomButton.svelte';
+	import RandomButton from '$lib/components/Builders/RandomButton.svelte';
+	import ShipSelectButton from '$lib/components/Builders/ShipSelectButton.svelte';
 	import BlackButton from '$lib/components/misc/BlackButton.svelte';
 	import { CurrentShipBuild } from '$lib/shipBuilder/ShipClass.js';
 	import {
@@ -57,12 +58,7 @@
 </script>
 
 {#key $keyStore}
-	<select bind:value={ShipName} on:change={() => handleShipChange()}>
-		{#each ships as ship}
-			<option>{ship.name}</option>
-		{/each}
-	</select>
-	<div class="flex flex-col items-center justify-center">
+	<div class="flex flex-col items-center justify-center mt-10">
 		<div class="flex flex-row space-x-2 my-1">
 			<BlackButton
 				parentFunction={async () => {
@@ -115,6 +111,18 @@
 				parentText={'Reset Build'}
 			></BlackButton>
 		</div>
+
+		<select
+			class="text-white bg-black border-white border-2 p-2 text-xl rounded-md my-1"
+			style="font-family: Merriweather;"
+			bind:value={ShipName}
+			on:change={() => handleShipChange()}
+		>
+			{#each ships as ship}
+				<option>{ship.name}</option>
+			{/each}
+		</select>
+
 		<div class="flex flex-row">
 			<div class="wrap-container" style="height: 40rem;">
 				{#each Object.keys(SessionShip.slots) as slotKey}

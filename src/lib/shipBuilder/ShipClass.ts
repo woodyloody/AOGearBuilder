@@ -94,6 +94,10 @@ export class CurrentShipBuild {
 		this.fixShipSlots();
 	}
 
+	getShip(): MainShip {
+		return this.ship;
+	}
+
 	resetBuild() {
 		this.slots = {
 			hullArmorSlot: [],

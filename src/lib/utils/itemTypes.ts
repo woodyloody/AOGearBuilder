@@ -112,7 +112,9 @@ export type EnchantItem = ItemIdentifiers & {
 
 export type ModifierItem = ItemIdentifiers & GearEnchantStats & { mainType: ModifierMainTypes };
 
-export type anyItem = Partial<ArmorItem | GemItem | EnchantItem | ModifierItem | ShipPartItem>;
+export type anyItem = Partial<
+	ArmorItem | GemItem | EnchantItem | ModifierItem | ShipPartItem | MainShip
+>;
 export type MainShip = ItemIdentifiers &
 	ShipStats & {
 		hullArmorSlot: number;
