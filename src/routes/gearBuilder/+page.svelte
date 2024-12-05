@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import GearButton from '$lib/components/builders/GearButton.svelte';
 	import { Player } from '$lib/gearBuilder/playerClasses';
 	import type { PageData } from '../$types';
@@ -23,6 +23,8 @@
 	export let data: PageData;
 
 	data = calculateScaling(data);
+
+	setContext('config', data.config);
 
 	let ready = false;
 
@@ -201,12 +203,11 @@
 														}}
 													>
 														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel) as statsAtLevel}
-															{#if statsAtLevel.level <= SessionPlayer.level}
-																<option
-																	transition:fade={{ duration: 69 }}
-																	value={statsAtLevel.level}>{statsAtLevel.level}</option
-																>
-															{/if}
+															<option
+																disabled={statsAtLevel.level > SessionPlayer.level}
+																transition:fade={{ duration: 69 }}
+																value={statsAtLevel.level}>{statsAtLevel.level}</option
+															>
 														{/each}
 													</select>
 												</div>

@@ -225,7 +225,7 @@ export class Player {
 			>;
 		}[] = [
 			{
-				type: 'Warden',
+				type: 'Oracle',
 				color: '#00FC00',
 				conditions: [({ vitality }) => vitality > 0.6]
 			},

@@ -13,6 +13,15 @@
 
 	let modifiers: Record<string, boolean> = getModifiers(data.items);
 
+	function canView(category: string, permissions: any): boolean {
+		for (let [key, value] of Object.entries(permissions)) {
+			if (key.startsWith(category) && value == true) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	let searchQuery = '';
 
 	$: listItems = data.items.filter((item: anyItem) => {
@@ -120,12 +129,12 @@
 			</div>
 		</SignIn>
 	{/if}
-	{#if 'config' in data.permissions && data.permissions.config == true}
+	{#if canView('config', data.permissions)}
 		<div class="pt-5">
-			<ConfigMenuButton config={data.config} />
+			<ConfigMenuButton {data} />
 		</div>
 	{/if}
-	{#if 'users' in data.permissions && data.permissions.users == true}
+	{#if canView('users', data.permissions)}
 		<div class="pt-5">
 			<UserManageMenuButton config={data.config} users={data.users} />
 		</div>

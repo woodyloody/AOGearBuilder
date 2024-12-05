@@ -5,12 +5,17 @@
 	import type { Player } from '$lib/gearBuilder/playerClasses';
 	import { fade } from 'svelte/transition';
 	import { staticImagesRootFolder } from '$lib/dataConstants';
+	import { camelCaseToWords, capitalizeEachWord } from '$lib/utils/admin/stringUtils';
+	import { getContext } from 'svelte';
 
 	export let showName: boolean;
 	export let stat: string;
 	export let itemStats: any;
 	export let chosenStat: any;
 	export let player: Player;
+	export let isItemMenu: boolean;
+
+	const config: any = getContext('config');
 
 	let isHovering = false;
 	let mousePosition = { x: 0, y: 0 };
@@ -46,7 +51,7 @@
 		}
 	}
 
-	function createdHover() {
+	function createdHover(node: HTMLDivElement) {
 		setBoxPositionOverflow();
 	}
 
@@ -63,10 +68,53 @@
 
 	let isMenuActive = false;
 
-	let isPositive = '+';
+	// this section is to automatically calculate the percentages and group them if they share a percent with another variable. its poorly done but works for now
+	function formatEfficiency(value: number) {
+		return (value < 0 ? '' : '+') + value.toString();
+	}
 
-	if (chosenStat[stat] < 0) {
-		isPositive = '-';
+	let substatEfficiencies: Record<string, number> = {};
+
+	let order: Record<string, string[]> = {};
+
+	let values: Record<string, string> = {};
+
+	if (!isItemMenu) {
+		for (let [key, value] of Object.entries(
+			config.efficiencies.values as Record<string, Record<string, string>>
+		)) {
+			values[key] = value.value;
+		}
+
+		substatEfficiencies[stat] = calculateSubstatEfficiency(
+			chosenStat[stat],
+			stat,
+			player,
+			values,
+			config.efficiencies.formulas
+		);
+
+		for (let [key, value] of Object.entries(config.efficiencies.values as Record<string, number>)) {
+			if (key.startsWith(stat)) {
+				substatEfficiencies[key] = calculateSubstatEfficiency(
+					chosenStat[stat],
+					key,
+					player,
+					values,
+					config.efficiencies.formulas
+				);
+			}
+		}
+
+		// sort based on order assigned
+
+		for (let [key, value] of Object.entries(substatEfficiencies)) {
+			if (value in order) {
+				order[value].push(key);
+			} else {
+				order[value] = [key];
+			}
+		}
 	}
 </script>
 
@@ -107,49 +155,34 @@
 		  
 		"
 		>
-			<div class=" items-center text-center z-40">
+			<div class="items-center text-center z-40">
 				<p
 					style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
 						stat
 					].fillColor}; -webkit-text-stroke: 1px; -webkit-text-stroke-color: {itemStats[stat]
 						.strokeColor}; text-align: center;"
 				>
-					Baseline : {isPositive}{calculateSubstatEfficiency(chosenStat[stat], stat, player)}%<br />
-					{#if stat == 'agility'}
-						Reflex : {isPositive}{calculateSubstatEfficiency(
-							chosenStat[stat],
-							'agiReflex',
-							player
-						)}%<br />
-						Leap : {isPositive}{calculateSubstatEfficiency(chosenStat[stat], 'agiLeap', player)}%
-					{:else if stat == 'attackSpeed'}
-						Startup / Projectile Speed : {isPositive}{calculateSubstatEfficiency(
-							chosenStat[stat],
-							'atkSpdStartupProjectile',
-							player
-						)}%<br />
-						Endlag : {isPositive}{calculateSubstatEfficiency(
-							chosenStat[stat],
-							'atkSpdEndlag',
-							player
-						)}%<br />
-					{:else if stat == 'regeneration'}
-						In Combat : {isPositive}{calculateSubstatEfficiency(
-							chosenStat[stat],
-							'regenerationInCombat',
-							player
-						)}%<br />
+					{#each Object.entries(order) as [key, value]}
+						{#each value as statKey}
+							{statKey != value[0] ? ' / ' : ''}{statKey in config.efficiencies.values &&
+							'name' in config.efficiencies.values[statKey]
+								? config.efficiencies.values[statKey]['name']
+								: capitalizeEachWord(camelCaseToWords(statKey))}
+						{/each}
+						: {formatEfficiency(substatEfficiencies[value[0]])}%<br />
+					{/each}
+					{#if stat == 'regeneration'}
 						<br />
 						<span class=" mt-8">Health gained per tick</span><br />
-						Out of Combat : {isPositive}{(
+						Out of Combat : {(
 							player.health *
 							0.01 *
-							(calculateSubstatEfficiency(chosenStat[stat], stat, player) / 100)
+							(substatEfficiencies['regeneration'] / 100)
 						).toFixed(2)}<br />
-						In Combat :{isPositive}{(
+						In Combat : {(
 							(93 + player.level * 7 + player.vitalityPoints * 4) *
 							0.01 *
-							(calculateSubstatEfficiency(chosenStat[stat], 'regenerationInCombat', player) / 100)
+							(substatEfficiencies['regeneration'] / 100)
 						).toFixed(2)}
 					{/if}
 				</p>
@@ -195,30 +228,35 @@
 				event.stopPropagation();
 			}}
 		>
-			<div class=" items-center text-center z-40">
+			<div class="items-center text-center z-40">
 				<p
 					style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
 						stat
 					].fillColor}; -webkit-text-stroke: 1px; -webkit-text-stroke-color: {itemStats[stat]
 						.strokeColor}; text-align: center;"
 				>
-					Baseline : +{calculateSubstatEfficiency(chosenStat[stat], stat, player)}%<br />
-					{#if stat == 'agility'}
-						Reflex : +{calculateSubstatEfficiency(chosenStat[stat], 'agiReflex', player)}%<br />
-						Leap : +{calculateSubstatEfficiency(chosenStat[stat], 'agiLeap', player)}%
-					{:else if stat == 'attackSpeed'}
-						Startup / Projectile Speed : +{calculateSubstatEfficiency(
-							chosenStat[stat],
-							'atkSpdStartupProjectile',
-							player
-						)}%<br />
-						Endlag : +{calculateSubstatEfficiency(chosenStat[stat], 'atkSpdEndlag', player)}%<br />
-					{:else if stat == 'regeneration'}
-						In Combat : +{calculateSubstatEfficiency(
-							chosenStat[stat],
-							'regenerationInCombat',
-							player
-						)}%<br />
+					{#each Object.entries(order) as [key, value]}
+						{#each value as statKey}
+							{statKey != value[0] ? ' / ' : ''}{statKey in config.efficiencies.values &&
+							'name' in config.efficiencies.values[statKey]
+								? config.efficiencies.values[statKey]['name']
+								: capitalizeEachWord(camelCaseToWords(statKey))}
+						{/each}
+						: {formatEfficiency(substatEfficiencies[value[0]])}%<br />
+					{/each}
+					{#if stat == 'regeneration'}
+						<br />
+						<span class=" mt-8">Health gained per tick</span><br />
+						Out of Combat : {(
+							player.health *
+							0.01 *
+							(substatEfficiencies['regeneration'] / 100)
+						).toFixed(2)}<br />
+						In Combat : {(
+							(93 + player.level * 7 + player.vitalityPoints * 4) *
+							0.01 *
+							(substatEfficiencies['regeneration'] / 100)
+						).toFixed(2)}
 					{/if}
 				</p>
 			</div>
