@@ -2,15 +2,11 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index';
 	import * as Avatar from '$lib/components/ui/avatar/index';
+	import SidebarGroup from './SidebarGroup.svelte';
 
-	import { Button } from '$lib/components/ui/button/index';
-
-	import { Cog, House, Info } from 'lucide-svelte';
-	import { SignIn, SignOut } from '@auth/sveltekit/components';
-	import type { page } from '$app/stores';
+	import { Bug, CircleGauge, Cog, House, Info, NotebookTabs, Sailboat } from 'lucide-svelte';
+	import { page } from '$app/stores';
 	import { signIn, signOut } from '@auth/sveltekit/client';
-
-	let { session } = $props();
 
 	const navItems = [
 		{
@@ -24,13 +20,37 @@
 			icon: Cog
 		},
 		{
-			title: 'About',
-			url: '/about',
+			title: 'Ship Builder',
+			url: '/shipBuilder',
+			icon: Sailboat
+		},
+		{
+			title: 'Report',
+			url: '/report',
+			icon: Bug
+		},
+		{
+			title: 'Info',
+			url: '/info',
 			icon: Info
 		}
 	];
 
-	console.log(session);
+	const apiRoutes = [
+		{
+			title: '/items',
+			url: '/api/items',
+			icon: NotebookTabs
+		}
+	];
+
+	const adminRoutes = [
+		{
+			title: 'Dashboard',
+			url: '/admin',
+			icon: CircleGauge
+		}
+	];
 </script>
 
 <Sidebar.Root class="merriweather-regular" collapsible="icon">
@@ -40,26 +60,23 @@
 			<Sidebar.GroupLabel class="justify-center text-center text-white"
 				><span class="text-xl">Arcane Odyssey Tools</span></Sidebar.GroupLabel
 			>
-			<Sidebar.GroupContent>
-				<Sidebar.Menu>
-					{#each navItems as item (item.title)}
-						<Sidebar.MenuItem>
-							<Sidebar.MenuButton>
-								{#snippet child({ props })}
-									<a href={item.url} {...props}>
-										<item.icon />
-										<span>{item.title}</span>
-									</a>
-								{/snippet}
-							</Sidebar.MenuButton>
-						</Sidebar.MenuItem>
-					{/each}
-				</Sidebar.Menu>
-			</Sidebar.GroupContent>
+			<Sidebar.Separator class="my-2"></Sidebar.Separator>
+
+			<SidebarGroup items={navItems} label={'Tools'} />
+
+			<Sidebar.Separator class="my-2"></Sidebar.Separator>
+
+			<SidebarGroup items={apiRoutes} label={'API'} />
+
+			{#if $page.data.isAdmin}
+				<Sidebar.Separator class="my-2" />
+				<SidebarGroup items={adminRoutes} label={'Admin'} />
+			{/if}
 		</Sidebar.Group>
 	</Sidebar.Content>
+
 	<Sidebar.Footer>
-		{#if !session}
+		{#if !$page.data.session}
 			<Sidebar.Menu>
 				<Sidebar.MenuItem>
 					<Sidebar.MenuButton onclick={() => signIn('discord')} variant="outline">
@@ -78,12 +95,12 @@
 						<DropdownMenu.Trigger class="w-full">
 							<Sidebar.MenuButton size="lg" class="h-auto w-full" variant="outline">
 								<Avatar.Root class="h-8 w-8 rounded-md">
-									<Avatar.Image src={session.user.image} alt="avatar" />
+									<Avatar.Image src={$page.data.session?.user?.image} alt="avatar" />
 									<Avatar.Fallback>U</Avatar.Fallback>
 								</Avatar.Root>
 								<div class="h-full">
 									<span>
-										{session.user.name}
+										{$page.data.session?.user?.name}
 									</span>
 								</div>
 							</Sidebar.MenuButton>

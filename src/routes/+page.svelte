@@ -1,3 +1,9 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	onMount(async () => {});
+</script>
+
 <svelte:head>
 	<!-- Primary Meta Tags -->
 	<title>Arcane Odyssey Tools</title>

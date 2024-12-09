@@ -1,15 +1,38 @@
 <script lang="ts">
 	import * as Sidebar from '$lib/components/ui/sidebar/index';
-	import AppSidebar from '$lib/components/app-sidebar.svelte';
+	import AppSidebar from '$lib/components/sidebar/app-sidebar.svelte';
 	import '../app.css';
 	import type { PageData } from './$types';
 	let { data, children }: { data: PageData; children: () => any } = $props();
 </script>
 
-<Sidebar.Provider>
-	<AppSidebar session={data.session} />
-	<main>
-		<Sidebar.Trigger />
-		{@render children()}
-	</main>
-</Sidebar.Provider>
+<section class="app">
+	<Sidebar.Provider>
+		<AppSidebar />
+		<Sidebar.Trigger class="text-white" />
+		<main class="main-content">
+			{@render children()}
+		</main>
+	</Sidebar.Provider>
+</section>
+
+<style>
+	.app {
+		display: flex;
+		justify-content: center; /* Center horizontally */
+		align-items: center; /* Center vertically */
+		flex-direction: column; /* Stack children vertically */
+		height: 100vh; /* Full height of the viewport */
+		width: 100%; /* Full width */
+		overflow: hidden; /* Prevent scrollbars */
+	}
+
+	.main-content {
+		display: flex;
+		flex-direction: column; /* Ensure its children are stacked */
+		justify-content: center; /* Center children vertically */
+		align-items: center; /* Center children horizontally */
+		width: 100%; /* Full width of the container */
+		overflow: auto; /* Enable scrolling on the main content only */
+	}
+</style>

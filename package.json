@@ -38,6 +38,7 @@
 	},
 	"dependencies": {
 		"@auth/sveltekit": "^1.7.4",
+		"mongodb": "^6.11.0",
 		"remixicon": "^4.5.0"
 	}
 }
