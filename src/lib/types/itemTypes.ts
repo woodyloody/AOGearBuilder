@@ -1,3 +1,5 @@
+import type { FightingStyle, Magic } from './playerTypes';
+
 export type Rarities =
 	| 'None'
 	| 'Common'
@@ -25,7 +27,25 @@ export type MainTypes =
 	| 'Quartermaster'
 	| 'Ship';
 
+export type SubTypes =
+	| 'None '
+	| 'Head'
+	| 'Helmet'
+	| 'Hat'
+	| 'Face'
+	| 'Neck'
+	| 'Amulet'
+	| 'Shoulder'
+	| 'Collar'
+	| 'Arms'
+	| 'Arm'
+	| 'Back'
+	| 'Front'
+	| 'Waist';
+
 export type StatTypes = 'None' | 'Magic' | 'Strength' | 'Vitality';
+
+export type ImbueTypes = Magic | FightingStyle;
 
 export type ItemIdentifiers = {
 	[index: string]: any;
@@ -35,7 +55,14 @@ export type ItemIdentifiers = {
 	mainType: MainTypes;
 	rarity: Rarities;
 	imageId: string;
-} & Partial<{ deleted: boolean; subType: string; statType: StatTypes }>;
+} & Partial<{
+	deleted: boolean;
+	subType: SubTypes;
+	statType: StatTypes;
+	imbueType: ImbueTypes;
+	source: string[];
+	isEndGame: boolean;
+}>;
 
 export type GearStats = Partial<{
 	power: number;
@@ -63,6 +90,23 @@ export type ShipStats = Partial<{
 	speed: number;
 	stability: number;
 	turning: number;
+
+	damageMultiplier: number;
+	rangeMultiplier: number;
+	spreadMultiplier: number;
+	fuseLength: number;
+	reloadTime: number;
+
+	ramSpeed: number;
+
+	hullArmorSlot: number;
+	quartermasterSlot: number;
+	cannonSlot: number;
+	siegeWeaponSlot: number;
+	sailMaterialSlot: number;
+	shipCrewSlot: number;
+	ramSlot: number;
+	deckhandSlot: number;
 }>;
 
 export type GearEnchantStats = Partial<{
@@ -82,17 +126,13 @@ export type GearEnchantStats = Partial<{
 	drawback: number;
 }>;
 
-type statsPerLevel = {
-	level: number;
-} & GearStats;
-
 export type ArmorDetails = ItemIdentifiers & {
 	mainType: 'Accessory' | 'Chestplate' | 'Pants';
 	gemNo: number;
 	minLevel: number;
 	maxLevel: number;
-	statsPerLevel: statsPerLevel[];
-	validModifiers: { id: string; name: string }[];
+	statsPerLevel: Record<number, GearStats>;
+	scaling: GearStats;
 };
 
 export type GemDetails = ItemIdentifiers & GearStats;
@@ -124,9 +164,8 @@ export type ModifierDetails = ItemIdentifiers &
 		mainType: 'Modifier';
 	};
 
-export type AnyItemDetails = Partial<
-	ArmorDetails | GemDetails | ShipPartDetails | EnchantDetails | ModifierDetails
->;
+export type AnyItemDetails = ItemIdentifiers &
+	Partial<ArmorDetails | GemDetails | ShipPartDetails | EnchantDetails | ModifierDetails>;
 
 export type ShipDetails = ItemIdentifiers &
 	ShipStats & {
@@ -139,3 +178,5 @@ export type ShipDetails = ItemIdentifiers &
 		ramSlot: number;
 		deckhandSlot: number;
 	};
+
+export type AllStats = GearStats & ShipStats & GearEnchantStats;
