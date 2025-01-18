@@ -9,7 +9,7 @@ export async function POST({ request }: { request: Request }) {
 		request.headers.get('x-real-ip') ||
 		'Unknown';
 
-	const postCheck = POSTCheck(request);
+	const postCheck = await POSTCheck(request);
 
 	consoleBob(
 		`[${postCheck.valid ? 'SUCCESS' : 'ERROR'}] POST ${request.url} called from ${clientIp}`

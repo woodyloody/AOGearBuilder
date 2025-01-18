@@ -1,10 +1,13 @@
 import { AO_API_KEY } from '$env/static/private';
-import { json } from '@sveltejs/kit';
+import { fail, json } from '@sveltejs/kit';
+import { consoleBob } from './utils';
 
-export function POSTCheck(request: Request): { valid: boolean; data: Response | any } {
+export async function POSTCheck(
+	request: Request
+): Promise<{ valid: boolean; data: Response | any }> {
 	let response;
 	try {
-		response = request.json();
+		response = await request.json();
 	} catch (error) {
 		return { valid: false, data: json({ message: 'Invalid JSON body' }, { status: 400 }) };
 	}

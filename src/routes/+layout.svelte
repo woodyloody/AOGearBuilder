@@ -6,7 +6,7 @@
 	let { data, children }: { data: PageData; children: () => any } = $props();
 </script>
 
-<section class="app">
+<section class="app merriweather-regular">
 	<Sidebar.Provider>
 		<AppSidebar />
 		<Sidebar.Trigger class="text-white" />
