@@ -7,50 +7,11 @@
 	import { Bug, CircleGauge, Cog, House, Info, NotebookTabs, Sailboat } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { navigationRoutes } from '$lib/components/sidebar/navigationRoutes';
 
-	const navItems = [
-		{
-			title: 'Home',
-			url: '/',
-			icon: House
-		},
-		{
-			title: 'Gear Builder',
-			url: '/gearBuilder',
-			icon: Cog
-		},
-		{
-			title: 'Ship Builder',
-			url: '/shipBuilder',
-			icon: Sailboat
-		},
-		{
-			title: 'Report',
-			url: '/report',
-			icon: Bug
-		},
-		{
-			title: 'Info',
-			url: '/info',
-			icon: Info
-		}
-	];
-
-	const apiRoutes = [
-		{
-			title: '/items',
-			url: '/api/items',
-			icon: NotebookTabs
-		}
-	];
-
-	const adminRoutes = [
-		{
-			title: 'Dashboard',
-			url: '/admin',
-			icon: CircleGauge
-		}
-	];
+	const publicRoutes = navigationRoutes.public;
+	const developerRoutes = navigationRoutes.developer;
+	const adminRoutes = navigationRoutes.admin;
 </script>
 
 <Sidebar.Root class="merriweather-regular" collapsible="icon">
@@ -62,11 +23,11 @@
 			>
 			<Sidebar.Separator class="my-2"></Sidebar.Separator>
 
-			<SidebarGroup items={navItems} label={'Tools'} />
+			<SidebarGroup items={publicRoutes} label={'Tools'} />
 
 			<Sidebar.Separator class="my-2"></Sidebar.Separator>
 
-			<SidebarGroup items={apiRoutes} label={'API'} />
+			<SidebarGroup items={developerRoutes} label={'API'} />
 
 			{#if $page.data.isAdmin}
 				<Sidebar.Separator class="my-2" />
