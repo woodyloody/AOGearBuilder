@@ -39,16 +39,15 @@ export class PlayerBuildSlot {
 			this.database.find((item) => item.name === 'None' && item.mainType === 'Gem') || null;
 
 		this.build = build;
-		this.armor = $state<ArmorDetails>(armor);
-		this.armorLevel = $state<number>(
+		this.armor = armor;
+		this.armorLevel =
 			Object.keys(this.armor.statsPerLevel).length === 0
 				? 0
-				: Math.max(...Object.keys(this.armor.statsPerLevel).map((key) => parseInt(key)))
-		);
-		this.enchant = $state<EnchantDetails>(enchant);
-		this.modifier = $state<ModifierDetails>(modifier);
-		this.gems = $state<GemDetails[]>([]);
-		this.chosenAtlanteanAttribute = $state<string>('None');
+				: Math.max(...Object.keys(this.armor.statsPerLevel).map((key) => parseInt(key)));
+		this.enchant = enchant;
+		this.modifier = modifier;
+		this.gems = [];
+		this.chosenAtlanteanAttribute = 'None';
 
 		// Armor level checking
 		if (Object.keys(this.armor.statsPerLevel).length == 0) {

@@ -48,21 +48,11 @@ export class PlayerBuild {
 		) as ModifierDetails;
 
 		this.slots = {
-			accessory1: $state<PlayerBuildSlot>(
-				new PlayerBuildSlot(this, noneAccessory, noneEnchant, noneModifier)
-			),
-			accessory2: $state<PlayerBuildSlot>(
-				new PlayerBuildSlot(this, noneAccessory, noneEnchant, noneModifier)
-			),
-			accessory3: $state<PlayerBuildSlot>(
-				new PlayerBuildSlot(this, noneAccessory, noneEnchant, noneModifier)
-			),
-			chestplate: $state<PlayerBuildSlot>(
-				new PlayerBuildSlot(this, noneChestplate, noneEnchant, noneModifier)
-			),
-			pants: $state<PlayerBuildSlot>(
-				new PlayerBuildSlot(this, nonePants, noneEnchant, noneModifier)
-			)
+			accessory1: new PlayerBuildSlot(this, noneAccessory, noneEnchant, noneModifier),
+			accessory2: new PlayerBuildSlot(this, noneAccessory, noneEnchant, noneModifier),
+			accessory3: new PlayerBuildSlot(this, noneAccessory, noneEnchant, noneModifier),
+			chestplate: new PlayerBuildSlot(this, noneChestplate, noneEnchant, noneModifier),
+			pants: new PlayerBuildSlot(this, nonePants, noneEnchant, noneModifier)
 		};
 	}
 

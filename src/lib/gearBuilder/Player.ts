@@ -2,6 +2,7 @@ import type { AnyItemDetails } from '$lib/types/itemTypes';
 import type { FightingStyle, Magic } from '$lib/types/playerTypes';
 import type { AOTConfig } from '$lib/types/utilTypes';
 import { PlayerBuild } from './PlayerBuild';
+import type { PlayerBuildSlot } from './PlayerBuildSlot';
 import { PlayerStatBuild } from './PlayerStatBuild';
 import { statBuilds, type StatBuildDetails } from './statBuilds';
 
@@ -19,25 +20,19 @@ export class Player {
 
 	statBuild: PlayerStatBuild;
 
-	constructor(
-		database: AnyItemDetails[],
-		config: AOTConfig,
-		maxLevel: number,
-		level = maxLevel,
-		health = 93
-	) {
+	constructor(database: AnyItemDetails[], config: AOTConfig, level = config.maxLevel, health = 93) {
 		this.database = database;
 		this.config = config;
 
-		this.level = $state<number>(level);
-		this.health = $state<number>(health + this.level * 7);
+		this.level = level;
+		this.health = health + this.level * 7;
 
 		this.minLevel = 1;
-		this.maxLevel = maxLevel;
+		this.maxLevel = config.maxLevel;
 
-		this.build = $state<PlayerBuild>(new PlayerBuild(this));
+		this.build = new PlayerBuild(this);
 
-		this.statBuild = $state<PlayerStatBuild>(new PlayerStatBuild(this));
+		this.statBuild = new PlayerStatBuild(this);
 	}
 
 	updateHealth() {
