@@ -3,7 +3,7 @@ import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import type { anyItem } from '$lib/utils/itemTypes';
 
-let itemsDB = db.collection<anyItem>('items-test');
+let itemsDB = db.collection<anyItem>('items-woody');
 let configDB = db.collection<any>('config');
 let usersDB = db.collection<any>('users');
 
