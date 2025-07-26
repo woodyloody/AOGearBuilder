@@ -1,11 +1,11 @@
 <script lang="ts">
-	import BuildLoadButton from '$lib/components/Builders/BuildLoadButton.svelte';
-	import BuildSaveButton from '$lib/components/Builders/BuildSaveButton.svelte';
-	import BuildsOverrideButton from '$lib/components/Builders/BuildsOverrideButton.svelte';
-	import GearButton from '$lib/components/Builders/GearButton.svelte';
-	import ItemTooltip from '$lib/components/Builders/ItemTooltip.svelte';
-	import RandomButton from '$lib/components/Builders/RandomButton.svelte';
-	import ShipSelectButton from '$lib/components/Builders/ShipSelectButton.svelte';
+	import BuildLoadButton from '$lib/components/builders/BuildLoadButton.svelte';
+	import BuildSaveButton from '$lib/components/builders/BuildSaveButton.svelte';
+	import BuildsOverrideButton from '$lib/components/builders/BuildsOverrideButton.svelte';
+	import GearButton from '$lib/components/builders/GearButton.svelte';
+	import ItemTooltip from '$lib/components/builders/ItemTooltip.svelte';
+	import RandomButton from '$lib/components/builders/RandomButton.svelte';
+	import ShipSelectButton from '$lib/components/builders/ShipSelectButton.svelte';
 	import BlackButton from '$lib/components/misc/BlackButton.svelte';
 	import { CurrentShipBuild } from '$lib/shipBuilder/ShipClass.js';
 	import {
