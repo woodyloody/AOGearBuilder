@@ -3,7 +3,7 @@ import type { anyItem } from '$lib/gearBuilder/itemTypes.js';
 
 export async function load({ fetch, setHeaders }) {
 
-    const data = await db.collection<anyItem>("items").find({}, {projection: {
+    const data = await db.collection<anyItem>("items-woody").find({}, {projection: {
 		_id: 0
 	}}).toArray();
 	const config = await db.collection('config').findOne({"name":"config"}, { projection: { _id: 0 } });
