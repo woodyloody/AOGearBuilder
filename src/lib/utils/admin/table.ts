@@ -377,7 +377,7 @@ export class Table {
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
 			}
 		};
-		this.validModifiers = validModifiers;
+		this.validModifiers = structuredClone(validModifiers);
 
 		for (let level = minLevel; level <= maxLevel; level += 10) {
 			this.columns.push(new Column(level, this));
