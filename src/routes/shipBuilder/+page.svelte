@@ -18,6 +18,9 @@
 	import { get, writable } from 'svelte/store';
 
 	export let data;
+
+	let ready = false;
+
 	let SessionShip = new CurrentShipBuild(data.database);
 
 	let ships = data.database.filter((item) => item.mainType == 'Ship');
@@ -54,6 +57,7 @@
 		SessionShip.loadBuildCode(data.database, getBuildFromLocalStorage('shipBuild'));
 		loadHash();
 		updatePage();
+		ready = true;
 	});
 </script>
 
@@ -86,122 +90,124 @@
 	></script>
 </svelte:head>
 
-{#key $keyStore}
-	<div class="flex flex-col items-center justify-center mt-10">
-		<div class="flex flex-row space-x-2 my-1">
-			<BlackButton
-				parentFunction={async () => {
-					let code = SessionShip.getBuildCode();
-					await navigator.clipboard.writeText(code);
-				}}
-				parentText={'Get Build Code'}
-			></BlackButton>
-			<BlackButton
-				parentFunction={async () => {
-					let inputString = await navigator.clipboard.readText();
-					SessionShip.loadBuildCode(data.database, inputString);
-					updatePage();
-				}}
-				parentText={'Load Build Code'}
-			></BlackButton>
-			<BlackButton
-				parentFunction={async () => {
-					let code =
-						location.origin +
-						location.pathname +
-						(location.search ? location.search : '') +
-						'#' +
-						SessionShip.getBuildCode();
+{#if ready}
+	{#key $keyStore}
+		<div class="flex flex-col items-center justify-center mt-10">
+			<div class="flex flex-row space-x-2 my-1">
+				<BlackButton
+					parentFunction={async () => {
+						let code = SessionShip.getBuildCode();
+						await navigator.clipboard.writeText(code);
+					}}
+					parentText={'Get Build Code'}
+				></BlackButton>
+				<BlackButton
+					parentFunction={async () => {
+						let inputString = await navigator.clipboard.readText();
+						SessionShip.loadBuildCode(data.database, inputString);
+						updatePage();
+					}}
+					parentText={'Load Build Code'}
+				></BlackButton>
+				<BlackButton
+					parentFunction={async () => {
+						let code =
+							location.origin +
+							location.pathname +
+							(location.search ? location.search : '') +
+							'#' +
+							SessionShip.getBuildCode();
 
-					// copy text to clipboard
-					await navigator.clipboard.writeText(code);
-				}}
-				parentText={'Share Build Code'}
-			></BlackButton>
-		</div>
-		<div class="flex flex-row space-x-2 my-1">
-			<BuildSaveButton type={'ship'}></BuildSaveButton>
-			<BuildLoadButton
-				database={data.database}
-				type={'ship'}
-				parentPlayer={SessionShip}
-				updatePage={() => updatePage()}
-			></BuildLoadButton>
-			<BuildsOverrideButton type={'ship'}></BuildsOverrideButton>
-		</div>
-		<div class="flex flex-row space-x-2 my-1">
-			<RandomButton player={SessionShip} database={data.database} {updatePage} type={'ship'}
-			></RandomButton>
-			<BlackButton
-				parentFunction={() => {
-					SessionShip.resetBuild();
-					updatePage();
-				}}
-				parentText={'Reset Build'}
-			></BlackButton>
-		</div>
-
-		<select
-			class="text-white bg-black border-white border-2 p-2 text-xl rounded-md my-1"
-			style="font-family: Merriweather;"
-			bind:value={ShipName}
-			on:change={() => handleShipChange()}
-		>
-			{#each ships as ship}
-				<option>{ship.name}</option>
-			{/each}
-		</select>
-
-		<div class="flex flex-row">
-			<div class="wrap-container" style="height: 40rem;">
-				{#each Object.keys(SessionShip.slots) as slotKey}
-					<div class="flex flex-row">
-						{#each SessionShip.slots[slotKey] as ShipPartSlot, i}
-							{#if ShipPartSlot.base != null}
-								<GearButton
-									currentItem={ShipPartSlot.base}
-									database={data.database}
-									ship={SessionShip}
-									{slotKey}
-									slotIndex={i}
-									shipPartType={'base'}
-									updatePage={() => {
-										updatePage();
-									}}
-								/>
-							{/if}
-							{#if ShipPartSlot.enchant && ShipPartSlot.enchant != null}
-								<GearButton
-									currentItem={ShipPartSlot.enchant}
-									database={data.database}
-									ship={SessionShip}
-									{slotKey}
-									slotIndex={i}
-									shipPartType={'enchant'}
-									updatePage={() => {
-										updatePage();
-									}}
-								/>
-							{/if}
-						{/each}
-					</div>
-				{/each}
+						// copy text to clipboard
+						await navigator.clipboard.writeText(code);
+					}}
+					parentText={'Share Build Code'}
+				></BlackButton>
 			</div>
-			<div>
-				<div class=" m-20 w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40">
-					<ItemTooltip
-						fullItem={SessionShip.getShipBuildStats()}
-						ship={SessionShip}
-						showName={true}
-						atlanteanAttribute={''}
-						showOnlyAtlanteanStat={false}
-						isItemMenu={false}
-					></ItemTooltip>
+			<div class="flex flex-row space-x-2 my-1">
+				<BuildSaveButton type={'ship'}></BuildSaveButton>
+				<BuildLoadButton
+					database={data.database}
+					type={'ship'}
+					parentPlayer={SessionShip}
+					updatePage={() => updatePage()}
+				></BuildLoadButton>
+				<BuildsOverrideButton type={'ship'}></BuildsOverrideButton>
+			</div>
+			<div class="flex flex-row space-x-2 my-1">
+				<RandomButton player={SessionShip} database={data.database} {updatePage} type={'ship'}
+				></RandomButton>
+				<BlackButton
+					parentFunction={() => {
+						SessionShip.resetBuild();
+						updatePage();
+					}}
+					parentText={'Reset Build'}
+				></BlackButton>
+			</div>
+
+			<select
+				class="text-white bg-black border-white border-2 p-2 text-xl rounded-md my-1"
+				style="font-family: Merriweather;"
+				bind:value={ShipName}
+				on:change={() => handleShipChange()}
+			>
+				{#each ships as ship}
+					<option>{ship.name}</option>
+				{/each}
+			</select>
+
+			<div class="flex flex-row">
+				<div class="wrap-container" style="height: 40rem;">
+					{#each Object.keys(SessionShip.slots) as slotKey}
+						<div class="flex flex-row">
+							{#each SessionShip.slots[slotKey] as ShipPartSlot, i}
+								{#if ShipPartSlot.base != null}
+									<GearButton
+										currentItem={ShipPartSlot.base}
+										database={data.database}
+										ship={SessionShip}
+										{slotKey}
+										slotIndex={i}
+										shipPartType={'base'}
+										updatePage={() => {
+											updatePage();
+										}}
+									/>
+								{/if}
+								{#if ShipPartSlot.enchant && ShipPartSlot.enchant != null}
+									<GearButton
+										currentItem={ShipPartSlot.enchant}
+										database={data.database}
+										ship={SessionShip}
+										{slotKey}
+										slotIndex={i}
+										shipPartType={'enchant'}
+										updatePage={() => {
+											updatePage();
+										}}
+									/>
+								{/if}
+							{/each}
+						</div>
+					{/each}
+				</div>
+				<div>
+					<div class=" m-20 w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40">
+						<ItemTooltip
+							fullItem={SessionShip.getShipBuildStats()}
+							ship={SessionShip}
+							showName={true}
+							atlanteanAttribute={''}
+							showOnlyAtlanteanStat={false}
+							isItemMenu={false}
+						></ItemTooltip>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-{/key}
+	{/key}
+{/if}
 
 <style>
 	.wrap-container {
