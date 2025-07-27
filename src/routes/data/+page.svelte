@@ -79,20 +79,20 @@
 	<!-- Primary Meta Tags -->
 	<title>Gear Builder Data Request</title>
 	<meta name="title" content="Gear Builder Data Request" />
-	<meta name="description" content="Gear Builder Data Request for Arcane Odyssey by BobbyNooby" />
+	<meta name="description" content="Gear Builder Data Request for Arcane Odyssey" />
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://tools.arcaneodyssey.net/data" />
+	<meta property="og:url" content="https://ao.woodyloody.com/data" />
 	<meta property="og:title" content="Gear Builder Data Request" />
-	<meta property="og:description" content="Gear Builder Data Request for Arcane Odyssey by BobbyNooby" />
+	<meta property="og:description" content="Gear Builder Data Request for Arcane Odyssey" />
 	<meta property="og:image" content="https://i.imgur.com/c6n3LP1.png" />
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
-	<meta property="twitter:url" content="https://tools.arcaneodyssey.net/data" />
+	<meta property="twitter:url" content="https://ao.woodyloody.com/data" />
 	<meta property="twitter:title" content="Gear Builder Data Request" />
-	<meta property="twitter:description" content="Gear Builder Data Request for Arcane Odyssey by BobbyNooby" />
+	<meta property="twitter:description" content="Gear Builder Data Request for Arcane Odyssey by" />
 	<meta property="twitter:image" content="https://i.imgur.com/c6n3LP1.png" />
 
 	<!-- Meta Tags Generated with https://metatags.io -->

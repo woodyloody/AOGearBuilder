@@ -57,6 +57,35 @@
 	});
 </script>
 
+<svelte:head>
+	<!-- Primary Meta Tags -->
+	<title>Ship Builder</title>
+	<meta name="title" content="Ship Builder" />
+	<meta name="description" content="Ship Builder for Arcane Odyssey" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://ao.woodyloody.com/shipBuilder" />
+	<meta property="og:title" content="Ship Builder" />
+	<meta property="og:description" content="Ship Builder for Arcane Odyssey" />
+	<meta property="og:image" content="https://i.imgur.com/c6n3LP1.png" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://ao.woodyloody.com/shipBuilder" />
+	<meta property="twitter:title" content="Ship Builder" />
+	<meta property="twitter:description" content="Ship Builder for Arcane Odyssey" />
+	<meta property="twitter:image" content="https://i.imgur.com/c6n3LP1.png" />
+
+	<!-- Meta Tags Generated with https://metatags.io -->
+
+	<script
+		async
+		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1741484020713413"
+		crossorigin="anonymous"
+	></script>
+</svelte:head>
+
 {#key $keyStore}
 	<div class="flex flex-col items-center justify-center mt-10">
 		<div class="flex flex-row space-x-2 my-1">

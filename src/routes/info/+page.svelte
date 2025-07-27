@@ -18,14 +18,14 @@
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://tools.arcaneodyssey.net/" />
+	<meta property="og:url" content="https://ao.woodyloody.com/info" />
 	<meta property="og:title" content="Info" />
 	<meta property="og:description" content="Links to discord, and data spreadsheets." />
 	<meta property="og:image" content="https://i.imgur.com/c6n3LP1.png" />
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
-	<meta property="twitter:url" content="https://tools.arcaneodyssey.net/" />
+	<meta property="twitter:url" content="https://ao.woodyloody.com/info" />
 	<meta property="twitter:title" content="Info" />
 	<meta property="twitter:description" content="Links to discord, and data spreadsheets." />
 	<meta property="twitter:image" content="https://i.imgur.com/c6n3LP1.png" />
