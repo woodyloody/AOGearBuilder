@@ -880,12 +880,16 @@
 
 								{#each Object.keys(statsTable.visiBools) as stat}
 									{#if statsTable.visiBools[stat].bool === true}
-										<div class="w-full pb-1 h-6 items-center">
-											<img
-												class="object-contain h-6"
-												alt={statsTable.visiBools[stat].text}
-												src={statsTable.visiBools[stat].imageId}
-											/>
+										<div class="w-full pb-1 h-6 items-center text-ellipsis overflow-hidden whitespace-nowrap">
+											{#if statsTable.visiBools[stat].imageId != ""}
+												<img
+													class="object-contain h-6"
+													alt={statsTable.visiBools[stat].text}
+													src={statsTable.visiBools[stat].imageId}
+												/>
+											{:else}
+												{statsTable.visiBools[stat].text}
+											{/if}
 										</div>
 									{/if}
 								{/each}

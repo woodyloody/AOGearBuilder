@@ -309,72 +309,72 @@ export class Table {
 			damageMultiplier: {
 				bool: false,
 				text: 'Damage Multiplier',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			rangeMultiplier: {
 				bool: false,
 				text: 'Range Multiplier',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			fuseLength: {
 				bool: false,
 				text: 'Fuse Length',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			spreadMultiplier: {
 				bool: false,
 				text: 'Spread Multiplier',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			reloadTime: {
 				bool: false,
 				text: 'Reload Time',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			ramSpeed: {
 				bool: false,
 				text: 'Ram Speed',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ""
 			},
 			hullArmorSlot: {
 				bool: false,
 				text: 'Hull Armor Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			quartermasterSlot: {
 				bool: false,
 				text: 'Quartermaster Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			cannonSlot: {
 				bool: false,
 				text: 'Cannon Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			siegeWeaponSlot: {
 				bool: false,
 				text: 'Siege Weapon Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			sailMaterialSlot: {
 				bool: false,
 				text: 'Sail Material Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			shipCrewSlot: {
 				bool: false,
 				text: 'Ship Crew Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			ramSlot: {
 				bool: false,
 				text: 'Ram Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			deckhandSlot: {
 				bool: false,
 				text: 'Deckhand Slot',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			}
 		};
 		this.validModifiers = structuredClone(validModifiers);
