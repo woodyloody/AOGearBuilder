@@ -273,12 +273,11 @@
 														}}
 													>
 														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel) as statsAtLevel}
-															{#if statsAtLevel.level <= SessionPlayer.level}
-																<option
-																	transition:fade={{ duration: 69 }}
-																	value={statsAtLevel.level}>{statsAtLevel.level}</option
-																>
-															{/if}
+															<option
+																disabled={statsAtLevel.level > SessionPlayer.level}
+																transition:fade={{ duration: 69 }}
+																value={statsAtLevel.level}>{statsAtLevel.level}</option
+															>
 														{/each}
 													</select>
 												</div>
@@ -424,11 +423,11 @@
 													}}
 												>
 													{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel) as statsAtLevel}
-														{#if statsAtLevel.level <= SessionPlayer.level}
-															<option transition:fade={{ duration: 69 }} value={statsAtLevel.level}
-																>{statsAtLevel.level}</option
-															>
-														{/if}
+														<option
+															disabled={statsAtLevel.level > SessionPlayer.level}
+															transition:fade={{ duration: 69 }}
+															value={statsAtLevel.level}>{statsAtLevel.level}</option
+														>
 													{/each}
 												</select>
 												<PostCalcsButton
