@@ -8,6 +8,7 @@
 	import type { CurrentShipBuild } from '$lib/shipBuilder/ShipClass';
 	import { base } from '$app/paths';
 	import StatWithBar from './StatWithBar.svelte';
+	import EpHelp from './EPHelp.svelte';
 
 	export let fullItem: ArmorItem | GemItem | EnchantItem | ModifierItem | any,
 		showName: boolean,
@@ -351,7 +352,14 @@
 			{#each Object.keys(itemStats) as stat}
 				{#if chosenStat[stat]}
 					{#if statWithEffectivenessKeys.includes(stat)}
-						<StatWithPercentEffectiveness {stat} {chosenStat} {itemStats} {showName} {player} />
+						<StatWithPercentEffectiveness
+							{stat}
+							{chosenStat}
+							{itemStats}
+							{showName}
+							{player}
+							{isItemMenu}
+						/>
 					{:else if shipStatsWithBarKeys.includes(stat)}
 						<StatWithBar key={stat} value={chosenStat[stat]}></StatWithBar>
 					{:else}
@@ -380,7 +388,7 @@
 					<p
 						style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; text-align: center; -webkit-text-fill-color: white"
 					>
-						EP: {efficiencyPointsString}
+						<EpHelp />: {efficiencyPointsString}
 					</p>
 				</div>
 			{/if}

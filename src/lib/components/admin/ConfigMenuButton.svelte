@@ -5,8 +5,9 @@
 	import toast from 'svelte-french-toast';
 	import NumberInput from './inputs/NumberInput.svelte';
 	import { capitalizeEachWord } from '$lib/utils/admin/stringUtils';
+	import { evaluateStat } from '$lib/utils/calculateSubstatEfficiency';
 
-	export let config: any;
+	export let data: any;
 
 	let open = false;
 
@@ -16,13 +17,57 @@
 
 	let imbueType = 'acid';
 
+	let efficienciesCategory = 'values';
+	let efficienciesVaribles: Record<string, string> = {
+		formulas:
+			'The valid variables that can be referenced are multiplier (the multiplier set in the values), statAmount (the number of each stat the build has) and playerLevel (the players level)',
+		values:
+			'The valid variables that can be referenced are any variable named here. E.g. baseline*2 will equal the number in baseline multiplied by 2'
+	};
+
+	function createValues() {
+		let values: Record<string, string> = {};
+		for (let [key, value] of Object.entries(
+			data.config.efficiencies.values as Record<string, Record<string, string>>
+		)) {
+			values[key] = value.value;
+		}
+		return values;
+	}
+
+	function checkValue(
+		e: Event & {
+			currentTarget: EventTarget & HTMLInputElement;
+		}
+	) {
+		let statResult: number = NaN;
+		try {
+			statResult = evaluateStat(e.currentTarget.id, createValues());
+		} catch (error) {
+			e.currentTarget.setCustomValidity(
+				'Invalid variables. Please check the variables are spelt correctly.'
+			);
+			e.currentTarget.reportValidity();
+			return true;
+		}
+
+		if (Number.isNaN(statResult)) {
+			e.currentTarget.setCustomValidity('Invalid Input. Variables must not create a loop.');
+			e.currentTarget.reportValidity();
+			return true;
+		}
+
+		e.currentTarget.setCustomValidity('');
+		return true;
+	}
+
 	$: title = 'Config';
 	const handleToggle = () => {
 		open = !open;
 	};
 
 	function generateEntry() {
-		finalSubmitData = JSON.stringify(config);
+		finalSubmitData = JSON.stringify(data.config);
 	}
 
 	onMount(() => {});
@@ -95,9 +140,9 @@
 						<NumberInput
 							id={'maxLevel'}
 							name={'Max Level'}
-							placeholder={config.maxLevel}
+							placeholder={data.config.maxLevel}
 							isRequired={true}
-							bind:value={config.maxLevel}
+							bind:value={data.config.maxLevel}
 						/>
 					</div>
 
@@ -113,25 +158,25 @@
 								name={'imbueType'}
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 							>
-								{#each Object.keys(config.scaling.imbuedStatType) as option}
+								{#each Object.keys(data.config.scaling.imbuedStatType) as option}
 									<option value={option}>{capitalizeEachWord(option)}</option>
 								{/each}
 							</select>
 						</div>
 					</div>
-					{#if imbueType in config.scaling.imbuedStatType}
+					{#if imbueType in data.config.scaling.imbuedStatType}
 						<div class="grid gap-6 mb-6 md:grid-cols-4">
-							{#each Object.keys(config.scaling.imbuedStatType[imbueType]) as key}
+							{#each Object.keys(data.config.scaling.imbuedStatType[imbueType]) as key}
 								<div>
 									<label for={key} class="block mb-2 text-sm font-medium text-gray-900"
 										>{capitalizeEachWord(key)}</label
 									>
 									<input
-										bind:value={config.scaling.imbuedStatType[imbueType][key]}
+										bind:value={data.config.scaling.imbuedStatType[imbueType][key]}
 										type="number"
 										id={key}
 										name={key}
-										placeholder={config.scaling.imbuedStatType[imbueType][key].toString()}
+										placeholder={data.config.scaling.imbuedStatType[imbueType][key].toString()}
 										step="any"
 										class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 									/>
@@ -139,6 +184,52 @@
 							{/each}
 						</div>
 					{/if}
+
+					<h6 class="mb-1 text-lg font-bold text-gray-900">Efficiencies Config</h6>
+					<div class="mb-6">
+						<div>
+							<label
+								for={'efficienciesCategory'}
+								class="block mb-2 text-sm font-medium text-gray-900">Category</label
+							>
+							<select
+								bind:value={efficienciesCategory}
+								id={'efficienciesCategory'}
+								name={'efficienciesCategory'}
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+							>
+								{#each Object.keys(data.config.efficiencies) as option}
+									<option value={option}>{capitalizeEachWord(option)}</option>
+								{/each}
+							</select>
+						</div>
+					</div>
+					<div class="mb-6">
+						<h6 class="text-sm mb-2">
+							{efficienciesVaribles[efficienciesCategory]}
+						</h6>
+						<div class="grid gap-6 md:grid-cols-{efficienciesCategory == 'values' ? '4' : '1'}">
+							{#each Object.keys(data.config.efficiencies[efficienciesCategory]) as key}
+								<div>
+									<label for={key} class="block mb-2 text-sm font-medium text-gray-900">{key}</label
+									>
+									<input
+										on:focusin={checkValue}
+										on:change={checkValue}
+										bind:value={data.config.efficiencies[efficienciesCategory][key].value}
+										type="text"
+										id={key}
+										name={key}
+										placeholder={data.config.efficiencies[efficienciesCategory][
+											key
+										].value.toString()}
+										class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+										required
+									/>
+								</div>
+							{/each}
+						</div>
+					</div>
 				</div>
 
 				<SubmitButton text={'Update'} />

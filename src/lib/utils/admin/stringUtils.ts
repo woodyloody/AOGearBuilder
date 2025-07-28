@@ -11,5 +11,6 @@ export function capitalizeEachWord(string: string) {
 }
 
 export function camelCaseToWords(s: string) {
-	return s.replace(/([A-Z])/g, ' $1').toLowerCase();
+	const result = s.replace(/([A-Z])/g, ' $1');
+	return result.charAt(0).toUpperCase() + result.slice(1);
 }

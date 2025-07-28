@@ -5,47 +5,50 @@
 	import toast from 'svelte-french-toast';
 	import NumberInput from './inputs/NumberInput.svelte';
 	import TextInput from './inputs/TextInput.svelte';
-    import SelectInput from './inputs/SelectInput.svelte';
+	import SelectInput from './inputs/SelectInput.svelte';
 
 	export let config: any, users: any;
 
 	let open = false;
 
-    let finalSubmitData: string = '';
+	let finalSubmitData: string = '';
 
 	let title = 'Users';
 
-    let userId = "";
+	let userId = '';
 
-    let user: any = {}
+	let user: any = {};
 
-    $: {users = users.map((user: any) => {
-        for (var key of Object.keys(user.permissions)) {
-            user.permissions[key] = user.permissions[key].toString();
-        }
-        return user;
-    })}
+	$: {
+		users = users.map((user: any) => {
+			for (var key of Object.keys(user.permissions)) {
+				user.permissions[key] = user.permissions[key].toString();
+			}
+			return user;
+		});
+	}
 
 	$: title = 'Users';
-    $: {user = users.filter( (user: any) => user.id==userId )[0] || {}; console.log(user)};
+	$: {
+		user = users.filter((user: any) => user.id == userId)[0] || {};
+		console.log(user);
+	}
 	const handleToggle = () => {
 		open = !open;
 	};
 
-    function generateEntry() {
+	function generateEntry() {
 		finalSubmitData = JSON.stringify(user);
 		user = {};
 	}
 
-	onMount(() => {
-	});
+	onMount(() => {});
 </script>
 
 <button
-    class="font-bold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-    on:click={() => handleToggle()}>Manage Users</button
+	class="font-bold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+	on:click={() => handleToggle()}>Manage Users</button
 >
-
 
 {#if open}
 	<div
@@ -58,7 +61,7 @@
 			<form
 				method="POST"
 				action="?/updateUser"
-                on:submit={generateEntry}
+				on:submit={generateEntry}
 				use:enhance={() => {
 					return async ({ result, update }) => {
 						update({ reset: false });
@@ -102,45 +105,49 @@
 				</div>
 
 				<div class="content p-8 pt-2 overflow-y-auto">
-                    <input type="hidden" id="user" name="user" value={finalSubmitData} required />
+					<input type="hidden" id="user" name="user" value={finalSubmitData} required />
 
-                    <h6 class="mb-1 text-lg font-bold text-gray-900">User</h6>
+					<h6 class="mb-1 text-lg font-bold text-gray-900">User</h6>
 					<div class="grid gap-6 mb-6 md:grid-cols-2">
 						<div>
-							<TextInput
-								id={'userId'}
-								name={'User ID'}
-								isRequired={true}
-								bind:value={userId}
-							/>
+							<TextInput id={'userId'} name={'User ID'} isRequired={true} bind:value={userId} />
 						</div>
-						{#if !("id" in user) && userId != ""}
+						{#if !('id' in user) && userId != ''}
 							<div>
 								<!-- used to space button inline with above text box -->
-								<label for="createUser" class="block mb-2 text-sm font-medium text-gray-900"></label>
-								<div class="flex flex-shrink-0 bg-gray-100 p-5 px-8 overflow-hidden">
-									<button on:click={() => {user = {"id":userId, "permissions":{}}; users.push(user)}} id="createUser" type="button" class="font-bold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Create User</button>
+								<label for="createUser" class="block mb-2 text-sm font-medium text-gray-900"
+								></label>
+								<div class="flex flex-shrink-0 p-5 px-8 overflow-hidden">
+									<button
+										on:click={() => {
+											user = { id: userId, permissions: {} };
+											users.push(user);
+										}}
+										id="createUser"
+										type="button"
+										class="font-bold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+										>Create User</button
+									>
 								</div>
 							</div>
 						{/if}
 					</div>
 
-                    <h6 class="mb-1 text-lg font-bold text-gray-900">Permissions</h6>
-                    {#if "permissions" in user}
-                        <div class="grid gap-6 mb-6 md:grid-cols-4">
-                            {#each config.permissions as permission}
-                                <SelectInput
-                                    id={permission}
-                                    name={permission}
-                                    bind:value={user.permissions[permission]}
-                                    dropdowns={["true", "false"]}
-                                    tooltip={'None'}
-                                />
-                            {/each}
-                        </div>
-                    {/if}
-
-                </div>
+					<h6 class="mb-1 text-lg font-bold text-gray-900">Permissions</h6>
+					{#if 'permissions' in user}
+						<div class="grid gap-6 mb-6 md:grid-cols-4">
+							{#each config.permissions as permission}
+								<SelectInput
+									id={permission}
+									name={permission}
+									bind:value={user.permissions[permission]}
+									dropdowns={['true', 'false']}
+									tooltip={'None'}
+								/>
+							{/each}
+						</div>
+					{/if}
+				</div>
 
 				<SubmitButton text={'Update'} />
 			</form>

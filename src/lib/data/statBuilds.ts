@@ -6,8 +6,8 @@ export const statBuilds: Record<string, statBuildStats> = {
 		magicNo: 1,
 		fightingStyleNo: 0
 	},
-	Warden: {
-		name: 'Warden',
+	Oracle: {
+		name: 'Oracle',
 		magicNo: 0,
 		fightingStyleNo: 0
 	},
@@ -38,7 +38,7 @@ export const statBuilds: Record<string, statBuildStats> = {
 	},
 	Paladin: {
 		name: 'Paladin',
-		magicNo: 2,
+		magicNo: 1,
 		fightingStyleNo: 0
 	},
 	Warlord: {
