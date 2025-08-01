@@ -450,11 +450,11 @@
 				column[statName] = item.scaling[statName];
 				statsTable.visiBools[statName].bool = true;
 			}
-			for (let imbue of Object.keys(config.scaling.imbuedStatType)) {
-				if (item.name?.toLowerCase().startsWith(imbue)) {
-					for (let statType of Object.keys(config.scaling.imbuedStatType[imbue])) {
-						statsTable.visiBools[statType].bool = true;
-					}
+
+			let imbue = findImbue(item, config);
+			if (imbue != '') {
+				for (let statType of Object.keys(config.scaling.imbuedStatType[imbue])) {
+					statsTable.visiBools[statType].bool = true;
 				}
 			}
 			scalingTable.column = column;

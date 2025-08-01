@@ -109,7 +109,7 @@ export function findImbue(item: anyItem, config: any): string {
 		'imbuedStatType' in config.scaling
 	) {
 		for (let imbue of Object.keys(config.scaling.imbuedStatType)) {
-			if (item.name?.toLowerCase().startsWith(imbue)) {
+			if (item.name?.toLowerCase().startsWith(imbue+" ")) {
 				imbuedStatType = imbue;
 				break;
 			}
