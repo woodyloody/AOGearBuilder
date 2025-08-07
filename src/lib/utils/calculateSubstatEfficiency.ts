@@ -1,7 +1,7 @@
 import type { Player } from '$lib/gearBuilder/playerClasses';
 import { evaluate, parse, OperatorNode } from 'mathjs';
 
-function evaluateValue(key: string, values: Record<string, string>): number {
+export function evaluateValue(key: string, values: Record<string, string>): number {
 	let stat = 1;
 	if (key in values) {
 		stat = evaluate(values[key], values);
@@ -42,30 +42,32 @@ export function evaluateStat(key: string, values: Record<string, string>): numbe
 }
 
 export function calculateSubstatEfficiency(
-	statAmount: number,
 	statKey: string,
-	player: Player,
-	values: Record<string, string>,
-	formulas: Record<string, Record<string, string>>
+	values: Record<string, string>
 ) {
-	const playerLevel = player.level;
-	let multiplier: number = 1;
-
-	if (statKey in values) {
-		multiplier = evaluateStat(statKey, values);
-	}
+	let percentCalc: number = evaluateStat(statKey, values);
+	
+	/*
 	const percentCalcOld =
 		multiplier *
 		1.35 *
 		((16 * Math.pow(Math.log(0.1 * statAmount + 4), 3) * 0.09 + 0.15 * statAmount) /
 			(0.1 + 0.15 * Math.pow(playerLevel, 0.5)) -
 			0.79);
+	*/
 
+	return Math.round((percentCalc + Number.EPSILON) * 100) / 100;
+}
+
+export function calculateBaseline(
+	statAmount: number,
+	player: Player,
+	formulas: Record<string, Record<string, string>>
+) {
 	let percentCalc = evaluate(formulas.baseline.value.toString(), {
-		multiplier: multiplier,
 		statAmount: statAmount,
-		playerLevel: playerLevel
+		playerLevel: player.level
 	});
 	percentCalc *= statAmount / Math.abs(statAmount);
-	return Math.round((percentCalc + Number.EPSILON) * 100) / 100;
+	return percentCalc;
 }

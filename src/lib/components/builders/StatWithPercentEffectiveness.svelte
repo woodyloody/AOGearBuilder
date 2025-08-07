@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { isMobile } from '$lib/utils/mobileStore';
 	import { writable } from 'svelte/store';
-	import { calculateSubstatEfficiency } from '$lib/utils/calculateSubstatEfficiency';
+	import { calculateBaseline, calculateSubstatEfficiency, evaluateValue } from '$lib/utils/calculateSubstatEfficiency';
 	import type { Player } from '$lib/gearBuilder/playerClasses';
 	import { fade } from 'svelte/transition';
 	import { staticImagesRootFolder } from '$lib/dataConstants';
@@ -83,25 +83,27 @@
 		for (let [key, value] of Object.entries(
 			config.efficiencies.values as Record<string, Record<string, string>>
 		)) {
-			values[key] = value.value;
+			if (key == "baseline") {
+				values[key] = calculateBaseline(chosenStat[stat],
+					player,
+					config.efficiencies.formulas).toString()
+			} else {
+				values[key] = value.value;
+			}
 		}
 
+		values[stat] = evaluateValue(stat, values).toString()+"*baseline";
+
 		substatEfficiencies[stat] = calculateSubstatEfficiency(
-			chosenStat[stat],
 			stat,
-			player,
-			values,
-			config.efficiencies.formulas
+			values
 		);
 
 		for (let [key, value] of Object.entries(config.efficiencies.values as Record<string, number>)) {
 			if (key.startsWith(stat)) {
 				substatEfficiencies[key] = calculateSubstatEfficiency(
-					chosenStat[stat],
 					key,
-					player,
-					values,
-					config.efficiencies.formulas
+					values
 				);
 			}
 		}
