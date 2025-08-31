@@ -4,7 +4,7 @@ import type { Actions } from './$types';
 import type { anyItem } from '$lib/utils/itemTypes';
 
 let itemsDB = db.collection<anyItem>('items-woody');
-let configDB = db.collection<any>('config');
+let configDB = db.collection<any>('config-woody');
 let usersDB = db.collection<any>('users');
 
 async function verifySession(session: any, permissions: any[]) {

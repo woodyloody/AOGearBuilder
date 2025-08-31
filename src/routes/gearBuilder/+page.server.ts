@@ -8,7 +8,7 @@ export const load: PageServerLoad = async (): Promise<any> => {
 		.toArray();
 
 	const config = await db
-		.collection('config')
+		.collection('config-woody')
 		.findOne({ name: 'config' }, { projection: { _id: 0 } });
 
 	// Readonly testing
