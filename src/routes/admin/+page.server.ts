@@ -197,7 +197,7 @@ export const actions = {
 			return fail(403, { error: validAttributes });
 		}
 
-		await itemsDB.updateOne({ id: item.id }, { $set: item });
+		await itemsDB.replaceOne({ id: item.id }, item);
 	},
 	updateConfig: async (event) => {
 		let session = await event.locals.auth();

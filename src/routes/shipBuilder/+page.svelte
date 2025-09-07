@@ -92,8 +92,8 @@
 
 {#if ready}
 	{#key $keyStore}
-		<div class="flex flex-col items-center justify-center mt-10">
-			<div class="flex flex-row space-x-2 my-1">
+		<div class="flex flex-col items-center justify-center mb-20 mt-10 xl:mb-0">
+			<div class="flex flex-col xl:flex-row space-x-0 xl:space-x-2 space-y-2 xl:space-y-0 my-1">
 				<BlackButton
 					parentFunction={async () => {
 						let code = SessionShip.getBuildCode();
@@ -124,7 +124,7 @@
 					parentText={'Share Build Code'}
 				></BlackButton>
 			</div>
-			<div class="flex flex-row space-x-2 my-1">
+			<div class="flex flex-col xl:flex-row space-x-0 xl:space-x-2 space-y-2 xl:space-y-0 my-1">
 				<BuildSaveButton type={'ship'}></BuildSaveButton>
 				<BuildLoadButton
 					database={data.database}
@@ -134,7 +134,7 @@
 				></BuildLoadButton>
 				<BuildsOverrideButton type={'ship'}></BuildsOverrideButton>
 			</div>
-			<div class="flex flex-row space-x-2 my-1">
+			<div class="flex flex-col xl:flex-row space-x-0 xl:space-x-2 space-y-2 xl:space-y-0 my-1">
 				<RandomButton player={SessionShip} database={data.database} {updatePage} type={'ship'}
 				></RandomButton>
 				<BlackButton
@@ -147,20 +147,22 @@
 			</div>
 
 			<select
-				class="text-white bg-black border-white border-2 p-2 text-xl rounded-md my-1"
+				class="text-white bg-black border-white border-2 p-2 text-xl rounded-md mt-1"
 				style="font-family: Merriweather;"
 				bind:value={ShipName}
 				on:change={() => handleShipChange()}
 			>
-				{#each ships as ship}
+				{#each ships.sort(function (first, second) {
+					return second.durability - first.durability;
+				}) as ship}
 					<option>{ship.name}</option>
 				{/each}
 			</select>
 
-			<div class="flex flex-row">
-				<div class="wrap-container" style="height: 40rem;">
-					{#each Object.keys(SessionShip.slots) as slotKey}
-						<div class="flex flex-row">
+			<div class="flex flex-col xl:flex-row">
+				<div class="flex flex-col me-5">
+					{#each ['hullArmorSlot', 'sailMaterialSlot', 'ramSlot', 'cannonSlot', 'siegeWeaponSlot'] as slotKey}
+						<div class="flex flex-row justify-center">
 							{#each SessionShip.slots[slotKey] as ShipPartSlot, i}
 								{#if ShipPartSlot.base != null}
 									<GearButton
@@ -192,8 +194,42 @@
 						</div>
 					{/each}
 				</div>
-				<div>
-					<div class=" m-20 w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40">
+				<div class="flex flex-col xl:w-[28rem] my-5 xl:my-0">
+					{#each ['shipCrewSlot', 'quartermasterSlot', 'deckhandSlot'] as slotKey}
+						<div class="flex flex-row flex-wrap w-screen justify-center mx-auto xl:w-auto xl:ml-0">
+							{#each SessionShip.slots[slotKey] as ShipPartSlot, i}
+								{#if ShipPartSlot.base != null}
+									<GearButton
+										currentItem={ShipPartSlot.base}
+										database={data.database}
+										ship={SessionShip}
+										{slotKey}
+										slotIndex={i}
+										shipPartType={'base'}
+										updatePage={() => {
+											updatePage();
+										}}
+									/>
+								{/if}
+								{#if ShipPartSlot.enchant && ShipPartSlot.enchant != null}
+									<GearButton
+										currentItem={ShipPartSlot.enchant}
+										database={data.database}
+										ship={SessionShip}
+										{slotKey}
+										slotIndex={i}
+										shipPartType={'enchant'}
+										updatePage={() => {
+											updatePage();
+										}}
+									/>
+								{/if}
+							{/each}
+						</div>
+					{/each}
+				</div>
+				<div class="justify-center mx-auto order-first xl:order-none my-5 xl:my-0">
+					<div class="mx-20 w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40">
 						<ItemTooltip
 							fullItem={SessionShip.getShipBuildStats()}
 							ship={SessionShip}
@@ -201,18 +237,32 @@
 							atlanteanAttribute={''}
 							showOnlyAtlanteanStat={false}
 							isItemMenu={false}
+							statsShown={'stats'}
 						></ItemTooltip>
+
+						{#each SessionShip.slots['cannonSlot'].concat(SessionShip.slots['siegeWeaponSlot']) as cannon}
+							{#if cannon.base.name != 'None'}
+								<div class="flex items-center justify-center">
+									<p
+										style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: white; text-align: center;"
+									>
+										{cannon.base.name}
+									</p>
+								</div>
+								<ItemTooltip
+									fullItem={cannon.getSlotStats()}
+									ship={SessionShip}
+									showName={true}
+									atlanteanAttribute={''}
+									showOnlyAtlanteanStat={false}
+									isItemMenu={false}
+									statsShown={'weapon'}
+								></ItemTooltip>
+							{/if}
+						{/each}
 					</div>
 				</div>
 			</div>
 		</div>
 	{/key}
 {/if}
-
-<style>
-	.wrap-container {
-		display: flex;
-		flex-direction: column;
-		flex-wrap: wrap;
-	}
-</style>

@@ -22,7 +22,9 @@ export class ShipItemSlot {
 		const partRelations = {
 			Ram: 'ram',
 			'Hull Armor': 'hull',
-			'Sail Material': 'sail'
+			'Sail Material': 'sail',
+			Cannon: 'cannon',
+			'Siege Weapon': 'siegeWeapon'
 		};
 
 		try {

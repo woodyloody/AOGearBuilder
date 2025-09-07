@@ -83,8 +83,8 @@ export class CurrentShipBuild {
 		this.noneItems = {
 			hullArmorSlot: { base: noneHullArmor, enchant: noneEnchant },
 			quartermasterSlot: { base: noneQuartermaster, enchant: undefined },
-			cannonSlot: { base: noneCannon, enchant: undefined },
-			siegeWeaponSlot: { base: noneSiegeWeapon, enchant: undefined },
+			cannonSlot: { base: noneCannon, enchant: noneEnchant },
+			siegeWeaponSlot: { base: noneSiegeWeapon, enchant: noneEnchant },
 			sailMaterialSlot: { base: noneSailMaterial, enchant: noneEnchant },
 			shipCrewSlot: { base: noneShipCrew, enchant: undefined },
 			ramSlot: { base: noneRam, enchant: noneEnchant },
@@ -194,7 +194,9 @@ export class CurrentShipBuild {
 		const partRelations = {
 			Ram: 'ram',
 			'Hull Armor': 'hull',
-			'Sail Material': 'sail'
+			'Sail Material': 'sail',
+			Cannon: 'cannon',
+			'Siege Weapon': 'siegeWeapon'
 		};
 
 		let badConditions: Array<

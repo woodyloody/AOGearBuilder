@@ -101,7 +101,9 @@
 		const partRelations = {
 			Ram: 'ram',
 			'Hull Armor': 'hull',
-			'Sail Material': 'sail'
+			'Sail Material': 'sail',
+			Cannon: 'cannon',
+			'Siege Weapon': 'siegeWeapon'
 		};
 
 		try {
@@ -134,7 +136,7 @@
 			deckhandSlot: 'Deckhand'
 		};
 
-		const hasEnchant = ['Hull Armor', 'Sail Material', 'Ram'];
+		const hasEnchant = ['Hull Armor', 'Sail Material', 'Ram', 'Cannon', 'Siege Weapon'];
 
 		ship.resetBuild();
 

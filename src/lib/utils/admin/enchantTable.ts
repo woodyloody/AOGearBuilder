@@ -290,32 +290,32 @@ export class EnchantTable {
 			damageMultiplier: {
 				bool: false,
 				text: 'Damage Multiplier',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			rangeMultiplier: {
 				bool: false,
 				text: 'Range Multiplier',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			fuseLength: {
 				bool: false,
 				text: 'Fuse Length',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			spreadMultiplier: {
 				bool: false,
 				text: 'Spread Multiplier',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			reloadTime: {
 				bool: false,
 				text: 'Reload Time',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ``
 			},
 			ramSpeed: {
 				bool: false,
 				text: 'Ram Speed',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/turning.png`
+				imageId: ''
 			}
 		};
 		this.visiBoolsComponents = {
@@ -330,6 +330,14 @@ export class EnchantTable {
 			sail: {
 				bool: false,
 				text: 'Sail'
+			},
+			cannon: {
+				bool: false,
+				text: 'Cannon'
+			},
+			siegeWeapon: {
+				bool: false,
+				text: 'Siege Weapon'
 			}
 		};
 		this.selected = {

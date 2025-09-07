@@ -19,7 +19,8 @@
 		isItemMenu: boolean = false,
 		atlanteanAttribute: string = '',
 		showOnlyAtlanteanStat: boolean = false, //importing the Item that was selected cos thats the only thing thats needed
-		shipPartType: 'base' | 'enchant' | undefined = undefined;
+		shipPartType: 'base' | 'enchant' | undefined = undefined,
+		statsShown: 'stats' | 'weapon' | 'both' = 'both';
 	// This document is a tooltip for the items
 
 	let item = fullItem;
@@ -292,7 +293,9 @@
 			const partRelations = {
 				Ram: 'ram',
 				'Hull Armor': 'hull',
-				'Sail Material': 'sail'
+				'Sail Material': 'sail',
+				Cannon: 'cannon',
+				'Siege Weapon': 'siegeWeapon'
 			};
 
 			const baseMainType = ship.getShipPart(slotKey as keyof typeof ship.slots, slotIndex as number)
@@ -351,34 +354,36 @@
 		{#if !showOnlyAtlanteanStat}
 			{#each Object.keys(itemStats) as stat}
 				{#if chosenStat[stat]}
-					{#if statWithEffectivenessKeys.includes(stat)}
-						<StatWithPercentEffectiveness
-							{stat}
-							{chosenStat}
-							{itemStats}
-							{showName}
-							{player}
-							{isItemMenu}
-						/>
-					{:else if shipStatsWithBarKeys.includes(stat)}
+					{#if (statsShown == 'both' || statsShown == 'weapon') && shipStatsWithBarKeys.includes(stat)}
 						<StatWithBar key={stat} value={chosenStat[stat]}></StatWithBar>
-					{:else}
-						<div class="flex items-center justify-center">
-							<img class="h-6" src="{staticImagesRootFolder}/stats/{stat}.png" alt={stat} />
-							<p
-								style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
-									stat
-								].fillColor}; -webkit-text-stroke: 1.5px; -webkit-text-stroke-color: {itemStats[
-									stat
-								].strokeColor}; text-align: center;"
-							>
-								{#if showName && chosenStat[stat] > 0}
-									+
-								{/if}
-								{chosenStat[stat]}{#if ['stability', 'resilience'].includes(stat)}%{/if}
-								{#if showName}{itemStats[stat].name}{/if}
-							</p>
-						</div>
+					{:else if (statsShown == 'both' || statsShown == 'stats') && !shipStatsWithBarKeys.includes(stat)}
+						{#if statWithEffectivenessKeys.includes(stat)}
+							<StatWithPercentEffectiveness
+								{stat}
+								{chosenStat}
+								{itemStats}
+								{showName}
+								{player}
+								{isItemMenu}
+							/>
+						{:else}
+							<div class="flex items-center justify-center">
+								<img class="h-6" src="{staticImagesRootFolder}/stats/{stat}.png" alt={stat} />
+								<p
+									style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
+										stat
+									].fillColor}; -webkit-text-stroke: 1.5px; -webkit-text-stroke-color: {itemStats[
+										stat
+									].strokeColor}; text-align: center;"
+								>
+									{#if showName && chosenStat[stat] > 0}
+										+
+									{/if}
+									{chosenStat[stat]}{#if ['stability', 'resilience'].includes(stat)}%{/if}
+									{#if showName}{itemStats[stat].name}{/if}
+								</p>
+							</div>
+						{/if}
 					{/if}
 				{/if}
 			{/each}

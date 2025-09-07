@@ -37,7 +37,7 @@
 				style=" color: {validKeys[key].color}; -webkit-text-stroke-color: {validKeys[key]
 					.stroke}; -webkit-text-stroke: 1px;"
 			>
-				{value}
+				{Math.round((value + Number.EPSILON) * 100) / 100}
 			</p>
 		</div>
 		<div style="border-width: 1px; border-color: {validKeys[key].color};" class="h-4 w-full">
