@@ -170,9 +170,11 @@
 			<p class="text-l z-40" style="color: white; font-family: Merriweather;">
 				{#if levelRange != ''}Level {levelRange}{/if}
 			</p>
-			<p class="text-l z-40" style="color: white; font-family: 'Open Sans', sans-serif;">
-				{item.legend}
-			</p>
+			{#if shipPartType != 'enchant'}
+				<p class="text-l z-40" style="color: white; font-family: 'Open Sans', sans-serif;">
+					{item.legend}
+				</p>
+			{/if}
 			<div class=" items-center text-center z-40">
 				<ItemTooltip
 					fullItem={item}
@@ -221,9 +223,11 @@
 							Level {item.maxLevel}
 						{/if}{item.mainType}
 					</p>
-					<p class="text-l z-40" style="color: white; font-family: 'Open Sans', sans-serif;">
-						{item.legend}
-					</p>
+					{#if shipPartType != 'enchant'}
+						<p class="text-l z-40" style="color: white; font-family: 'Open Sans', sans-serif;">
+							{item.legend}
+						</p>
+					{/if}
 					<div class=" items-center text-center z-40">
 						<ItemTooltip
 							fullItem={item}

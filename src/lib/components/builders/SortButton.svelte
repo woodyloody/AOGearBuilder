@@ -79,27 +79,29 @@
 				<div class="w-1/2">
 					{#if menuIsActive}
 						{#each sortList as sort (sort.id)}
-							<div class="mb-4">
-								<button
-									class="w-full bg-black border border-white text-white font-bold text-lg py-2 px-4 rounded"
-									class:selected={sort.sortMethod === $sortType}
-									on:click={() => {
-										setSortType(sort.sortMethod);
-										if (!validStats[type].includes($sortTypeStat)) {
-											setSortTypeStat(validStats[type][0]);
-										}
+							{#if type == 'gear' || (sort.id != 4 && sort.id != 5)}
+								<div class="mb-4">
+									<button
+										class="w-full bg-black border border-white text-white font-bold text-lg py-2 px-4 rounded"
+										class:selected={sort.sortMethod === $sortType}
+										on:click={() => {
+											setSortType(sort.sortMethod);
+											if (!validStats[type].includes($sortTypeStat)) {
+												setSortTypeStat(validStats[type][0]);
+											}
 
-										menuToggle();
-										if (sort.sortMethod == 'statHighest' || sort.sortMethod == 'statLowest') {
-											statMenuIsActive = true;
-										}
-									}}
-								>
-									<p>
-										{sort.name}
-									</p>
-								</button>
-							</div>
+											menuToggle();
+											if (sort.sortMethod == 'statHighest' || sort.sortMethod == 'statLowest') {
+												statMenuIsActive = true;
+											}
+										}}
+									>
+										<p>
+											{sort.name}
+										</p>
+									</button>
+								</div>
+							{/if}
 						{/each}
 					{:else if statMenuIsActive}
 						{#each validStats[type] as stat}
