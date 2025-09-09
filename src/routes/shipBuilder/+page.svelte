@@ -159,7 +159,7 @@
 				{/each}
 			</select>
 
-			<div class="flex flex-col xl:flex-row">
+			<div class="flex flex-col xl:flex-row mt-5">
 				<div class="flex flex-col me-5">
 					{#each ['hullArmorSlot', 'sailMaterialSlot', 'ramSlot', 'cannonSlot', 'siegeWeaponSlot'] as slotKey}
 						<div class="flex flex-row justify-center">
@@ -228,8 +228,17 @@
 						</div>
 					{/each}
 				</div>
-				<div class="justify-center mx-auto order-first xl:order-none my-5 xl:my-0">
-					<div class="mx-20 w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40">
+				<div class="justify-center mx-auto order-first xl:order-none">
+					<div
+						class="mx-auto xl:ms-20 xl:me-5 w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40"
+					>
+						<div class="flex items-center justify-center mb-3 pb-3 w-[80%] mx-auto border-b-2">
+							<p
+								style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: white; text-align: center;"
+							>
+								Ship Stats
+							</p>
+						</div>
 						<ItemTooltip
 							fullItem={SessionShip.getShipBuildStats()}
 							ship={SessionShip}
@@ -239,27 +248,49 @@
 							isItemMenu={false}
 							statsShown={'stats'}
 						></ItemTooltip>
-
-						{#each SessionShip.slots['cannonSlot'].concat(SessionShip.slots['siegeWeaponSlot']) as cannon}
-							{#if cannon.base.name != 'None'}
-								<div class="flex items-center justify-center">
-									<p
-										style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: white; text-align: center;"
-									>
-										{cannon.base.name}
-									</p>
-								</div>
-								<ItemTooltip
-									fullItem={cannon.getSlotStats()}
-									ship={SessionShip}
-									showName={true}
-									atlanteanAttribute={''}
-									showOnlyAtlanteanStat={false}
-									isItemMenu={false}
-									statsShown={'weapon'}
-								></ItemTooltip>
-							{/if}
-						{/each}
+					</div>
+				</div>
+				<div class="justify-center mx-auto order-first xl:order-none my-5 xl:my-0">
+					<div class="w-80 h-auto p-2 border-2 border-white rounded bg-black bg-opacity-40">
+						<div class="flex items-center justify-center mb-3 pb-3 w-[80%] mx-auto border-b-2">
+							<p
+								style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: white; text-align: center;"
+							>
+								Weapon Stats
+							</p>
+						</div>
+						{#if SessionShip.slots['cannonSlot']
+							.concat(SessionShip.slots['siegeWeaponSlot'])
+							.filter((item) => item.base.name != 'None').length == 0}
+							<div class="flex items-center justify-center">
+								<p
+									style="font-family: 'Open Sans', sans-serif; font-weight: 500; font-size: 15px; -webkit-text-fill-color: white; text-align: center;"
+								>
+									No Weapons Equipped
+								</p>
+							</div>
+						{:else}
+							{#each SessionShip.slots['cannonSlot'].concat(SessionShip.slots['siegeWeaponSlot']) as cannon}
+								{#if cannon.base.name != 'None'}
+									<div class="flex items-center justify-center mt-3">
+										<p
+											style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: white; text-align: center;"
+										>
+											{cannon.base.name}
+										</p>
+									</div>
+									<ItemTooltip
+										fullItem={cannon.getSlotStats()}
+										ship={SessionShip}
+										showName={true}
+										atlanteanAttribute={''}
+										showOnlyAtlanteanStat={false}
+										isItemMenu={false}
+										statsShown={'weapon'}
+									></ItemTooltip>
+								{/if}
+							{/each}
+						{/if}
 					</div>
 				</div>
 			</div>
