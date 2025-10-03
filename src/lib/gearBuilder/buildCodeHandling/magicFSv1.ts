@@ -1,13 +1,16 @@
 import { listOfFightingStyles } from '$lib/data/playerFightingStyles';
 import { listOfMagics } from '$lib/dataConstants';
+import { getBuildCode } from '$lib/utils/getBuildCode';
 import { getItemById } from '$lib/utils/getItemById';
 import type { anyItem } from '../../utils/itemTypes';
 import type { Player } from '../playerClasses';
 import { savantChoiceStore } from '../savantChoiceStore';
 
+const regex = /([0-9,]*\|){3}([A-z,0-9]*\|){4}[A-z,0-9]*/g;
+
 export function isMagicFSv1(buildCode: string) {
 	try {
-		let codeArray = buildCode.split('|');
+		let codeArray = getBuildCode(buildCode, regex).split('|');
 
 		if (codeArray.length == 8) {
 			return true;
@@ -22,7 +25,9 @@ export function isMagicFSv1(buildCode: string) {
 
 export function loadMagicFSv1(player: Player, database: anyItem[], codeString: string) {
 	try {
-		const slotCodeArray = codeString.split('|').map((slotString) => slotString.split(','));
+		const slotCodeArray = getBuildCode(codeString, regex)
+			.split('|')
+			.map((slotString) => slotString.split(','));
 
 		const slotkeyArray = ['accessory1', 'accessory2', 'accessory3', 'chestplate', 'pants'];
 

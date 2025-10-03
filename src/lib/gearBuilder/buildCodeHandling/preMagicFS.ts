@@ -1,11 +1,14 @@
 import { listOfMagics } from '$lib/dataConstants';
+import { getBuildCode } from '$lib/utils/getBuildCode';
 import { getItemById } from '$lib/utils/getItemById';
 import type { anyItem } from '../../utils/itemTypes';
 import type { Player } from '../playerClasses';
 
+const regex = /([0-9]*\|){6}([A-z.0-9]*\|){4}[A-z.0-9]*/g;
+
 export function isPreMagicFSBuildCode(buildCode: string) {
 	try {
-		let codeArray = buildCode.split('|');
+		let codeArray = getBuildCode(buildCode, regex).split('|');
 
 		if (codeArray.length == 11) {
 			return true;
@@ -20,7 +23,9 @@ export function isPreMagicFSBuildCode(buildCode: string) {
 
 export function loadPreMagicFSBuildCode(player: Player, database: anyItem[], codeString: string) {
 	try {
-		const slotCodeArray = codeString.split('|').map((slotString) => slotString.split('.'));
+		const slotCodeArray = getBuildCode(codeString, regex)
+			.split('|')
+			.map((slotString) => slotString.split('.'));
 		console.log(slotCodeArray);
 
 		const slotkeyArray = ['accessory1', 'accessory2', 'accessory3', 'chestplate', 'pants'];

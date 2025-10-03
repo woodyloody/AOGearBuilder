@@ -1,3 +1,5 @@
+import { getBuildCode } from '$lib/utils/getBuildCode';
+
 let oldToNew: Record<string, any> = {
 	Cannon: {
 		'0': 'b49',
@@ -139,9 +141,11 @@ function getItem(id: string, category: string) {
 	}
 }
 
+const regex = /[0-9]*\*([0-9,]*\*){5}[0-9]*\*[0-9,]*/g;
+
 export function isLegacyShipBuild(inputCode: string): boolean {
 	try {
-		const codeArray = inputCode.split('*');
+		const codeArray = getBuildCode(inputCode, regex).split('*');
 
 		if (codeArray.length == 8) {
 			return true;
@@ -160,7 +164,7 @@ export function loadOldShipCode(inputString: string) {
 	try {
 		// Decode URI in case the browser auto encodes URI
 
-		inputString = decodeURI(inputString);
+		inputString = getBuildCode(inputString, regex);
 
 		if (inputString.length >= 31) {
 			// Parse the input string

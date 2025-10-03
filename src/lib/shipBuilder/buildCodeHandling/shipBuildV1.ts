@@ -1,10 +1,13 @@
 import type { CurrentShipBuild } from '$lib/shipBuilder/ShipClass';
+import { getBuildCode } from '$lib/utils/getBuildCode';
 import { getItemById } from '$lib/utils/getItemById';
 import type { anyItem } from '$lib/utils/itemTypes';
 
+const regex = /[A-z0-9]*-[A-z'0-9]*-[A-z,0-9]*(-[A-z'0-9]*){3}-[A-z0-9]*-[A-z'0-9]*-[A-z,0-9]*/g;
+
 export function isShipBuildv1(buildCode: string) {
 	try {
-		let codeArray = buildCode.split('-');
+		let codeArray = getBuildCode(buildCode, regex).split('-');
 
 		if (codeArray.length == 9) {
 			return true;
@@ -21,7 +24,9 @@ export function isShipBuildv1(buildCode: string) {
 
 export function loadShipBuildv1(ship: CurrentShipBuild, database: anyItem[], buildCode: string) {
 	try {
-		const slotCodeArray = buildCode.split('-').map((slotString) => slotString.split(','));
+		const slotCodeArray = getBuildCode(buildCode, regex)
+			.split('-')
+			.map((slotString) => slotString.split(','));
 		console.log(slotCodeArray);
 
 		const slotkeyArray = [

@@ -1,3 +1,5 @@
+import { getBuildCode } from '$lib/utils/getBuildCode';
+
 let oldToNew: Record<string, any> = {
 	Accessory: {
 		'0': 'AAA',
@@ -5,7 +7,7 @@ let oldToNew: Record<string, any> = {
 		'3': 'T3B',
 		'4': 'AAi',
 		'5': '9py',
-		'6': 'AAA',
+		'6': 'ZeB',
 		'7': 'AAs',
 		'8': 'IvE',
 		'9': 'kCA',
@@ -147,9 +149,11 @@ function getItem(id: string, category: string) {
 	}
 }
 
+const regex = /(([0-9]*\.){5}[0-9]*'){4}(([0-9]*\.){5}[0-9]*)/g;
+
 export function isLegacyArmorBuild(inputCode: string): boolean {
 	try {
-		const codeArray = inputCode.split("'");
+		const codeArray = getBuildCode(inputCode, regex).split("'");
 
 		if (codeArray.length == 5) {
 			return true;
@@ -163,12 +167,12 @@ export function isLegacyArmorBuild(inputCode: string): boolean {
 }
 
 export function loadOldCode(inputString: string) {
-	let newCode: string = '136|1|0|0|0|0|';
+	let newCode: string = '136|0|0|0|0|0|';
 
 	try {
 		// Decode URI in case the browser auto encodes URI
 
-		inputString = decodeURI(inputString);
+		inputString = getBuildCode(inputString, regex);
 
 		if (inputString.length >= 59) {
 			// Parse the input string
