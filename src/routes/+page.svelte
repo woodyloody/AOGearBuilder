@@ -20,14 +20,20 @@
 	<meta property="og:url" content="https://aotools.woodyloody.com/" />
 	<meta property="og:title" content="Arcane Odyssey Tools" />
 	<meta property="og:description" content="Various Tools for Arcane Odyssey" />
-	<meta property="og:image" content="https://i.imgur.com/c6n3LP1.png" />
+	<meta
+		property="og:image"
+		content="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
+	/>
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:url" content="https://aotools.woodyloody.com/" />
 	<meta property="twitter:title" content="Arcane Odyssey Tools" />
 	<meta property="twitter:description" content="Various Tools for Arcane Odyssey" />
-	<meta property="twitter:image" content="https://i.imgur.com/c6n3LP1.png" />
+	<meta
+		property="twitter:image"
+		content="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
+	/>
 
 	<!-- Meta Tags Generated with https://metatags.io -->
 
@@ -44,7 +50,7 @@
 	{#if ready}
 		<div class="flex flex-col items-center justify-center w-full h-full align-center mt-48">
 			<img
-				src="https://i.imgur.com/c6n3LP1.png"
+				src="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
 				alt="logo"
 				in:fly={{ y: 20, duration: 2000 }}
 				style="padding-top: 3rem;"

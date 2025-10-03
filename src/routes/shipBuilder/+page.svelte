@@ -72,14 +72,20 @@
 	<meta property="og:url" content="https://aotools.woodyloody.com/shipBuilder" />
 	<meta property="og:title" content="Ship Builder" />
 	<meta property="og:description" content="Ship Builder for Arcane Odyssey" />
-	<meta property="og:image" content="https://i.imgur.com/c6n3LP1.png" />
+	<meta
+		property="og:image"
+		content="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
+	/>
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:url" content="https://aotools.woodyloody.com/shipBuilder" />
 	<meta property="twitter:title" content="Ship Builder" />
 	<meta property="twitter:description" content="Ship Builder for Arcane Odyssey" />
-	<meta property="twitter:image" content="https://i.imgur.com/c6n3LP1.png" />
+	<meta
+		property="twitter:image"
+		content="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
+	/>
 
 	<!-- Meta Tags Generated with https://metatags.io -->
 </svelte:head>

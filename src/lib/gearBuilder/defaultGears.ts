@@ -6,7 +6,8 @@ export const noneAccessory: ArmorItem = {
 	legend: 'Ermmm this is a nothing accessory',
 	mainType: 'Accessory',
 	rarity: 'None',
-	imageId: 'https://i.imgur.com/ynJYNoA.jpg',
+	imageId:
+		'https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/accessory/0.jpg',
 	deleted: false,
 	subType: 'None',
 	gemNo: 0,
@@ -22,7 +23,8 @@ export const noneChestplate: ArmorItem = {
 	legend: 'Nope. Big nothingburger chestplate here.',
 	mainType: 'Chestplate',
 	rarity: 'None',
-	imageId: 'https://i.imgur.com/Uj7r6Fm.jpg',
+	imageId:
+		'https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/chestplate/0.jpg',
 	deleted: false,
 	subType: 'None',
 	gemNo: 0,
@@ -38,7 +40,8 @@ export const nonePants: ArmorItem = {
 	legend: 'Yep, big nothing pants over here nothing to see.',
 	mainType: 'Pants',
 	rarity: 'None',
-	imageId: 'https://i.imgur.com/U9Z0chG.jpg',
+	imageId:
+		'https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/pants/0.jpg',
 	deleted: false,
 	subType: 'None',
 	gemNo: 0,

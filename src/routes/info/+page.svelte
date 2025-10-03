@@ -21,14 +21,20 @@
 	<meta property="og:url" content="https://aotools.woodyloody.com/info" />
 	<meta property="og:title" content="Info" />
 	<meta property="og:description" content="Links to discord, and data spreadsheets." />
-	<meta property="og:image" content="https://i.imgur.com/c6n3LP1.png" />
+	<meta
+		property="og:image"
+		content="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
+	/>
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:url" content="https://aotools.woodyloody.com/info" />
 	<meta property="twitter:title" content="Info" />
 	<meta property="twitter:description" content="Links to discord, and data spreadsheets." />
-	<meta property="twitter:image" content="https://i.imgur.com/c6n3LP1.png" />
+	<meta
+		property="twitter:image"
+		content="https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/icon.png"
+	/>
 
 	<!-- Meta Tags Generated with https://metatags.io -->
 
