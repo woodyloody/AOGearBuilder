@@ -372,14 +372,24 @@
 								<p
 									style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
 										stat
-									].fillColor}; -webkit-text-stroke: 1.5px; -webkit-text-stroke-color: {itemStats[
+									].fillColor}; -webkit-text-stroke: 1px; -webkit-text-stroke-color: {itemStats[
 										stat
 									].strokeColor}; text-align: center;"
 								>
 									{#if showName && chosenStat[stat] > 0}
 										+
 									{/if}
-									{chosenStat[stat]}{#if ['stability', 'resilience'].includes(stat)}%{/if}
+									{#if ['stability', 'resilience'].includes(stat)}
+										{#if chosenStat[stat] > 100}
+											100%<span style="-webkit-text-fill-color: #FF0000;-webkit-text-stroke: 1px;"
+												>(+{chosenStat[stat] - 100}%)</span
+											>
+										{:else}
+											{chosenStat[stat]}%
+										{/if}
+									{:else}
+										{chosenStat[stat]}
+									{/if}
 									{#if showName}{itemStats[stat].name}{/if}
 								</p>
 							</div>
