@@ -1,10 +1,18 @@
 import type { Player } from '$lib/gearBuilder/playerClasses';
 import { evaluate, parse, OperatorNode } from 'mathjs';
 
+function evaluateExpression(expr: string, scope: Record<string, string>): number {
+	try {
+		return evaluate(expr, scope);
+	} catch (error) {
+		return NaN;
+	}
+}
+
 export function evaluateValue(key: string, values: Record<string, string>): number {
 	let stat = 1;
 	if (key in values) {
-		stat = evaluate(values[key], values);
+		stat = evaluateExpression(values[key], values);
 	}
 	return stat;
 }
@@ -41,12 +49,9 @@ export function evaluateStat(key: string, values: Record<string, string>): numbe
 	return evaluateValue(key, values);
 }
 
-export function calculateSubstatEfficiency(
-	statKey: string,
-	values: Record<string, string>
-) {
+export function calculateSubstatEfficiency(statKey: string, values: Record<string, string>) {
 	let percentCalc: number = evaluateStat(statKey, values);
-	
+
 	/*
 	const percentCalcOld =
 		multiplier *
@@ -64,7 +69,7 @@ export function calculateBaseline(
 	player: Player,
 	formulas: Record<string, Record<string, string>>
 ) {
-	let percentCalc = evaluate(formulas.baseline.value.toString(), {
+	let percentCalc = evaluateExpression(formulas.baseline.value.toString(), {
 		statAmount: statAmount,
 		playerLevel: player.level
 	});
