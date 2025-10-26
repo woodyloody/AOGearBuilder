@@ -196,7 +196,9 @@
 					}
 
 					efficiencyPointsString =
-						calculateEfficiencyPoints(minStats, 1) + ' - ' + calculateEfficiencyPoints(maxStats, 1);
+						calculateEfficiencyPoints(minStats, player.level) +
+						' - ' +
+						calculateEfficiencyPoints(maxStats, player.level);
 
 					for (const stat in itemStats) {
 						if (minStats.hasOwnProperty(stat) && maxStats.hasOwnProperty(stat)) {
