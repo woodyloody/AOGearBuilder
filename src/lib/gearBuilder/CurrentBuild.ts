@@ -189,8 +189,7 @@ export class CurrentBuild {
 			badConditions = [
 				(item, slot) =>
 					item.statType == 'Magic' &&
-					(!this.parentPlayer.magics.some((magic) => item.name.includes(magic)) ||
-						(this.parentPlayer.magics.includes('Light') && item.name.includes('Lightning'))),
+					!this.parentPlayer.magics.some((magic) => item.name.startsWith(magic + ' ')),
 				(item, slot) =>
 					item.statType == 'Strength' &&
 					!this.parentPlayer.fightingStyles.some(
