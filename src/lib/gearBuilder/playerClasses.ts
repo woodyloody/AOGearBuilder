@@ -71,6 +71,12 @@ export class Player {
 		this.fightingStyles = fightingStyles;
 	}
 
+	fixLevel() {
+		if (this.level > this.maxLevel) {
+			this.level = this.maxLevel;
+		}
+	}
+
 	fixPlayerStatPoints() {
 		// Statpoint Balancing
 		const maxStatPoints = this.level * 2;
@@ -334,6 +340,11 @@ export class Player {
 			} else if (isMagicFSv1(codeString)) {
 				loadMagicFSv1(this, database, codeString);
 			}
+			this.fixLevel();
+			this.fixPlayerStatPoints();
+			this.updateHealth();
+			this.build.fixBuildLevels();
+			this.build.fixBuildItems();
 		} catch (error) {
 			console.log(error);
 			this.build.resetBuild();
