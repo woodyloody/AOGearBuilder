@@ -53,7 +53,7 @@ export class Player {
 	) {
 		this.database = database;
 		this.level = level;
-		this.health = health + this.level * 7;
+		this.health = health + this.level * 9;
 
 		this.minLevel = 1;
 		this.maxLevel = maxLevel;
@@ -128,8 +128,8 @@ export class Player {
 	}
 
 	updateHealth() {
-		const baseHealth = 93 + this.level * 7;
-		this.health = baseHealth + this.build.getBuildStats().defense + this.vitalityPoints * 4;
+		const baseHealth = 93 + this.level * 9;
+		this.health = baseHealth + this.build.getBuildStats().defense;
 	}
 
 	updateStatBuild() {

@@ -22,7 +22,7 @@
 		player.magicPoints -
 		player.strengthPoints -
 		player.weaponPoints;
-	let baseHealth = 93 + player.level * 7;
+	let baseHealth = 93 + player.level * 9;
 	player.health = baseHealth + player.build.getBuildStats().defense;
 
 	// This doesnt work atm im just lazy to remove :P
@@ -72,7 +72,7 @@
 	$: {
 		player.level = clamp(player.level, player.minLevel, player.maxLevel);
 
-		baseHealth = 93 + player.level * 7;
+		baseHealth = 93 + player.level * 9;
 		player.updateHealth();
 		player.build.fixBuildLevels();
 	}
