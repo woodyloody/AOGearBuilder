@@ -39,7 +39,7 @@ export class Player {
 		database: anyItem[],
 		maxLevel: number,
 		level = maxLevel,
-		health = 93,
+		health = 91,
 
 		vitalityPoints = 0,
 		magicPoints = 0,
@@ -128,7 +128,7 @@ export class Player {
 	}
 
 	updateHealth() {
-		const baseHealth = 93 + this.level * 9;
+		const baseHealth = 91 + this.level * 9;
 		this.health = baseHealth + this.build.getBuildStats().defense;
 	}
 
