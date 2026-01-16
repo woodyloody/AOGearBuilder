@@ -551,6 +551,9 @@
 				}
 			}
 		} else {
+			if (item.name == 'Gilded') {
+				tempItem.gemNo = item.gemNo;
+			}
 			for (const statKey in statsTable.getData()) {
 				tempItem[statKey] = statsTable.getData()[statKey];
 			}
@@ -683,7 +686,7 @@
 						{/if}
 					</div>
 					<div class="grid gap-6 mb-6 md:grid-cols-4">
-						{#if tableSettings.mainType[item.mainType].gemVisibility == true}
+						{#if tableSettings.mainType[item.mainType].gemVisibility == true || item.name == 'Gilded'}
 							<RangeInput
 								id={'gemNo'}
 								name={'Gem No'}

@@ -22,6 +22,12 @@
 
 	export let data: PageData;
 
+	for (const item of Object.values(data.Database)) {
+		if ('gemNo' in item) {
+			item.originalGemNo = structuredClone(item.gemNo);
+		}
+	}
+
 	data = calculateScaling(data);
 
 	setContext('config', data.config);
@@ -211,16 +217,18 @@
 												</div>
 											</div>
 											<div class="flex flex-row">
-												{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
-													<GearButton
-														database={data.Database}
-														currentItem={gem}
-														player={SessionPlayer}
-														{slotKey}
-														gemIndex={parseInt(index)}
-														{updatePage}
-													/>
-												{/each}
+												<div class="grid grid-cols-3">
+													{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
+														<GearButton
+															database={data.Database}
+															currentItem={gem}
+															player={SessionPlayer}
+															{slotKey}
+															gemIndex={parseInt(index)}
+															{updatePage}
+														/>
+													{/each}
+												</div>
 											</div>
 										</div>
 									{/if}
@@ -283,16 +291,18 @@
 												</div>
 											</div>
 											<div class="flex flex-row">
-												{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
-													<GearButton
-														database={data.Database}
-														currentItem={gem}
-														player={SessionPlayer}
-														{slotKey}
-														gemIndex={parseInt(index)}
-														{updatePage}
-													/>
-												{/each}
+												<div class="grid grid-cols-3">
+													{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
+														<GearButton
+															database={data.Database}
+															currentItem={gem}
+															player={SessionPlayer}
+															{slotKey}
+															gemIndex={parseInt(index)}
+															{updatePage}
+														/>
+													{/each}
+												</div>
 											</div>
 										</div>
 									{/if}
@@ -464,16 +474,18 @@
 												/>
 											</div>
 											<div class="flex flex-row">
-												{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
-													<GearButton
-														database={data.Database}
-														currentItem={gem}
-														player={SessionPlayer}
-														{slotKey}
-														gemIndex={parseInt(index)}
-														{updatePage}
-													/>
-												{/each}
+												<div class="grid grid-cols-3">
+													{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
+														<GearButton
+															database={data.Database}
+															currentItem={gem}
+															player={SessionPlayer}
+															{slotKey}
+															gemIndex={parseInt(index)}
+															{updatePage}
+														/>
+													{/each}
+												</div>
 											</div>
 										</div>
 									</div>

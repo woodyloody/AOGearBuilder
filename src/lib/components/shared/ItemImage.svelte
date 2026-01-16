@@ -45,11 +45,14 @@
 			/>
 		{/if}
 	{/if}
-	{#if hasGems}
+	{#if hasGems && 'gemNo' in item}
 		<div class="absolute right-0 bottom-0 flex flex-row z-20">
-			{#each { length: item.gemNo } as _, i}
-				<img src="{staticImagesRootFolder}/Misc/gemslot.png" alt="Gem slot" class=" w-5 h-5" />
-			{/each}
+			<div class="grid grid-cols-4">
+				{#each { length: 4 - (item.gemNo % 4) } as _, i}<div></div>{/each}
+				{#each { length: item.gemNo } as _, i}
+					<img src="{staticImagesRootFolder}/Misc/gemslot.png" alt="Gem slot" class=" w-5 h-5" />
+				{/each}
+			</div>
 		</div>
 	{/if}
 	{#if loaded}

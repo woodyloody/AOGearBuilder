@@ -51,6 +51,8 @@ export class ArmorSlot {
 		for (let i = 0; i < armor.gemNo; i++) {
 			this.gems.push(noneGem);
 		}
+
+		this.fixSlotItems();
 	}
 
 	resetSlot() {
@@ -120,6 +122,17 @@ export class ArmorSlot {
 			this.armor = noneItem as ArmorItem;
 		}
 
+		//Modifiers Fix
+		if (!this.armor.validModifiers.includes(this.modifier.name)) {
+			this.modifier = noneModifier as ModifierItem;
+		}
+
+		if (this.modifier.name == 'Gilded') {
+			this.armor.gemNo = this.armor.originalGemNo + this.modifier.gemNo;
+		} else {
+			this.armor.gemNo = this.armor.originalGemNo;
+		}
+
 		//Gems Fix
 		if (this.gems.length < this.armor.gemNo) {
 			const diff = this.armor.gemNo - this.gems.length;
@@ -129,11 +142,6 @@ export class ArmorSlot {
 		}
 
 		this.gems.splice(this.armor.gemNo);
-
-		//Modifiers Fix
-		if (!this.armor.validModifiers.includes(this.modifier.name)) {
-			this.modifier = noneModifier as ModifierItem;
-		}
 
 		//Fix Levels
 		if (this.armorLevel > this.parentBuild.parentPlayer.level) {
@@ -173,6 +181,7 @@ export class ArmorSlot {
 		this.modifier = modifier;
 		// Call this to update this.atlanteanAttribute
 		this.getSlotStats();
+		this.fixSlotItems();
 	}
 
 	getSlotStats(preAtlantean: boolean = false): ArmorStats {
