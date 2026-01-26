@@ -28,6 +28,15 @@
 		}
 	}
 
+	let jewelAmulet = data.Database.find((i) => i.id == 'hxx');
+	if (jewelAmulet) {
+		for (let level = jewelAmulet.minLevel; level <= jewelAmulet.maxLevel; level += 10) {
+			if (!jewelAmulet.statsPerLevel.find((i) => i.level == level)) {
+				jewelAmulet.statsPerLevel.push({ level: level });
+			}
+		}
+	}
+
 	data = calculateScaling(data);
 
 	setContext('config', data.config);
