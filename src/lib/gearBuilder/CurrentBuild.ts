@@ -194,8 +194,8 @@ export class CurrentBuild {
 					item.statType == 'Strength' &&
 					!this.parentPlayer.fightingStyles.some(
 						(strength) =>
-							(strength != 'Sailor Fist' && item.name.includes(strength)) ||
-							(strength == 'Sailor Fist' && item.name.includes('Sailor Style'))
+							(strength != 'Sailor Style' && item.name.includes(strength)) ||
+							(strength == 'Sailor Style' && item.name.includes('Sailor Style'))
 					)
 			];
 			if (badConditions.some((condition) => condition(item, slot))) {

@@ -118,12 +118,21 @@
 			}
 		}
 	}
+
+	let statImageOverride = {
+		agility: 'https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/c/c5/Range.png',
+		intensity: 'https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/3/35/Haste.png'
+	};
 </script>
 
 {#if !$isMobile}
 	<button on:mousemove={handleMouseOver} on:mouseleave={handleMouseOut}>
 		<div class="flex items-center justify-center">
-			<img class="h-6" src="{staticImagesRootFolder}/stats/{stat}.png" alt={stat} />
+			{#if stat in statImageOverride}
+				<img class="h-6" src={statImageOverride[stat]} alt={stat} />
+			{:else}
+				<img class="h-6" src="{staticImagesRootFolder}/stats/{stat}.png" alt={stat} />
+			{/if}
 			<p
 				style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
 					stat
@@ -182,7 +191,7 @@
 							(substatEfficiencies['regeneration'] / 100)
 						).toFixed(2)}<br />
 						In Combat : {(
-							(93 + player.level * 7 + player.vitalityPoints * 4) *
+							(91 + player.level * 7 + player.vitalityPoints * 4) *
 							0.01 *
 							(substatEfficiencies['regeneration'] / 100)
 						).toFixed(2)}
@@ -203,7 +212,11 @@
 {#if $isMobile}
 	<button on:click={() => (isMenuActive = !isMenuActive)}>
 		<div class="flex items-center justify-center">
-			<img class="h-6" src="{staticImagesRootFolder}/stats/{stat}.png" alt={stat} />
+			{#if stat in statImageOverride}
+				<img class="h-6" src={statImageOverride[stat]} alt={stat} />
+			{:else}
+				<img class="h-6" src="{staticImagesRootFolder}/stats/{stat}.png" alt={stat} />
+			{/if}
 			<p
 				style="font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 20px; -webkit-text-fill-color: {itemStats[
 					stat
@@ -255,7 +268,7 @@
 							(substatEfficiencies['regeneration'] / 100)
 						).toFixed(2)}<br />
 						In Combat : {(
-							(93 + player.level * 7 + player.vitalityPoints * 4) *
+							(91 + player.level * 9 + player.vitalityPoints * 4) *
 							0.01 *
 							(substatEfficiencies['regeneration'] / 100)
 						).toFixed(2)}

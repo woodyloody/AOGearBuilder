@@ -62,36 +62,36 @@
 	let itemStats = {
 		power: { name: 'POWER', fillColor: '#FF8400', strokeColor: '#000000', suffix: '' },
 		defense: { name: 'DEFENSE', fillColor: '#737373', strokeColor: '#000000', suffix: '' },
-		agility: { name: 'AGILITY', fillColor: '#FFFFFF', strokeColor: '#00ffff', suffix: '' },
-		attackSpeed: { name: 'ATTACK SPEED', fillColor: '#FFFFFF', strokeColor: '#0077ff', suffix: '' },
-		attackSize: { name: 'ATTACK SIZE', fillColor: '#00FF00', strokeColor: '#471559', suffix: '' },
-		intensity: { name: 'INTENSITY', fillColor: '#FFF200', strokeColor: '#712402', suffix: '' },
+		agility: { name: 'RANGE', fillColor: '#FFFFFF', strokeColor: '#CAA0F0', suffix: '' },
+		attackSpeed: { name: 'DEXTERITY', fillColor: '#FFFFFF', strokeColor: '#0077ff', suffix: '' },
+		attackSize: { name: 'SIZE', fillColor: '#00FF00', strokeColor: '#471559', suffix: '' },
+		intensity: { name: 'HASTE', fillColor: '#FFF200', strokeColor: '#712402', suffix: '' },
 		regeneration: {
 			name: 'REGENERATION',
 			fillColor: '#C0FFC0',
 			strokeColor: '#35D234',
 			suffix: ''
 		},
-		piercing: { name: 'PIERCING', fillColor: '#FFD6AB', strokeColor: '#E22A1D', suffix: '' },
+		piercing: { name: 'PIERCE', fillColor: '#FFD6AB', strokeColor: '#E22A1D', suffix: '' },
 		resistance: { name: 'RESISTANCE', fillColor: '#89ABC6', strokeColor: '#000000', suffix: '' },
 
 		powerIncrement: { name: 'POWER', fillColor: '#FF8400', strokeColor: '#000000', suffix: '' },
 		defenseIncrement: { name: 'DEFENSE', fillColor: '#737373', strokeColor: '#000000', suffix: '' },
-		agilityIncrement: { name: 'AGILITY', fillColor: '#FFFFFF', strokeColor: '#00ffff', suffix: '' },
+		agilityIncrement: { name: 'RANGE', fillColor: '#FFFFFF', strokeColor: '#00ffff', suffix: '' },
 		attackSpeedIncrement: {
-			name: 'ATTACK SPEED',
+			name: 'DEXTERITY',
 			fillColor: '#FFFFFF',
 			strokeColor: '#0077ff',
 			suffix: ''
 		},
 		attackSizeIncrement: {
-			name: 'ATTACK SIZE',
+			name: 'SIZE',
 			fillColor: '#00FF00',
 			strokeColor: '#471559',
 			suffix: ''
 		},
 		intensityIncrement: {
-			name: 'INTENSITY',
+			name: 'HASTE',
 			fillColor: '#FFF200',
 			strokeColor: '#712402',
 			suffix: ''
@@ -103,7 +103,7 @@
 			suffix: ''
 		},
 		piercingIncrement: {
-			name: 'PIERCING',
+			name: 'PIERCE',
 			fillColor: '#FFD6AB',
 			strokeColor: '#E22A1D',
 			suffix: ''
@@ -341,7 +341,7 @@
 </script>
 
 {#if true}
-	<div class="text-center z-30">
+	<div class="grid text-center z-30">
 		<!--
 		
 		

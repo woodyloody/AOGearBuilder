@@ -19,7 +19,8 @@ export const listOfFightingStyles: fightingStyle[] = [
 	'Boxing',
 	'Iron Leg',
 	'Cannon Fist',
-	'Sailor Fist',
+	'Powder Fist',
+	'Sailor Style',
 	'Thermo Fist'
 ];
 
@@ -184,9 +185,49 @@ export const fightingStyleRecords: Record<fightingStyle, fightingStyleDetails> =
 		},
 		imageId: staticImagesRootFolder + '/Fighting Styles/Iron_Leg.webp'
 	},
-	'Sailor Fist': {
+	'Powder Fist': {
 		type: 'Fighting Style',
-		name: 'Sailor Fist',
+		name: 'Powder Fist',
+		legend:
+			'A fighting style that involves tossing gunpowder while attacking, and channelling trace amounts of energy to make it ignite as well as shielding the user from the harm of the explosion.',
+		color: '#C1C1C1',
+		textColors: {
+			genericFillColor: '#C1C1C1',
+			genericStrokeColor: '#000000'
+		},
+		stats: {
+			fightingStyleDamage: {
+				text: fightingStyleDamageText,
+				value: 0.7,
+				minValue: minFightingStyleDamageValue,
+				maxValue: maxFightingStyleDamageValue
+			},
+			fightingStyleSpeed: {
+				text: fightingStyleSpeedText,
+				value: 0.9,
+				minValue: minFightingStyleSpeedValue,
+				maxValue: maxFightingStyleSpeedValue
+			},
+			fightingStyleSize: {
+				text: fightingStyleSizeText,
+				value: 1,
+				minValue: minFightingStyleSizeValue,
+				maxValue: maxFightingStyleSizeValue
+			}
+		},
+		passive: ['On Hit: Inflicts Charred'],
+		extraStats: {
+			fightingStyleDamage: ['0.85x (Imbued)'],
+			fightingStyleSpeed: [],
+			fightingStyleSize: [],
+			misc: []
+		},
+
+		imageId: 'https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/e/e1/Powder_Fist.png'
+	},
+	'Sailor Style': {
+		type: 'Fighting Style',
+		name: 'Sailor Style',
 		legend:
 			'A fighting style that focuses on drinking seawater to absorb its magic pollution, placing the user in an intoxicated, dazed state, while energy and power surges through them.',
 		color: '#6A9FCC',
@@ -266,5 +307,46 @@ export const fightingStyleRecords: Record<fightingStyle, fightingStyleDetails> =
 			misc: []
 		},
 		imageId: staticImagesRootFolder + '/Fighting Styles/Thermo_Fist.webp'
+	},
+	'Vanishing Style': {
+		type: 'Fighting Style',
+		name: 'Vanishing Style',
+		legend:
+			'A fighting style that involves manipulating energy to make the user appear to vanish for periods of time if they retain focus, while dealing damage and block piercing with charged techniques.',
+		color: '#777777',
+		textColors: {
+			genericFillColor: '#777777',
+			genericStrokeColor: '#000000'
+		},
+		stats: {
+			fightingStyleDamage: {
+				text: fightingStyleDamageText,
+				value: 0.85,
+				minValue: minFightingStyleDamageValue,
+				maxValue: maxFightingStyleDamageValue
+			},
+			fightingStyleSpeed: {
+				text: fightingStyleSpeedText,
+				value: 1.1,
+				minValue: minFightingStyleSpeedValue,
+				maxValue: maxFightingStyleSpeedValue
+			},
+			fightingStyleSize: {
+				text: fightingStyleSizeText,
+				value: 1,
+				minValue: minFightingStyleSizeValue,
+				maxValue: maxFightingStyleSizeValue
+			}
+		},
+		passive: ['Critical Hits by charging for 1s'],
+		extraStats: {
+			fightingStyleDamage: ['1x (Imbued)'],
+			fightingStyleSpeed: [],
+			fightingStyleSize: [],
+			misc: []
+		},
+
+		imageId:
+			'https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/0/02/Vanishing_Style_Icon.png'
 	}
 };

@@ -61,23 +61,23 @@ export class ScalingTable {
 			},
 			agility: {
 				bool: false,
-				text: 'Agility',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/agility.png`
+				text: 'Range',
+				imageId: `https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/c/c5/Range.png`
 			},
 			attackSpeed: {
 				bool: false,
-				text: 'Attack Speed',
+				text: 'Dexterity',
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/attackSpeed.png`
 			},
 			attackSize: {
 				bool: false,
-				text: 'Attack Size',
+				text: 'Size',
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/attackSize.png`
 			},
 			intensity: {
 				bool: false,
-				text: 'Intensity',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/intensity.png`
+				text: 'Haste',
+				imageId: `https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/3/35/Haste.png`
 			},
 			regeneration: {
 				bool: false,
@@ -86,7 +86,7 @@ export class ScalingTable {
 			},
 			piercing: {
 				bool: false,
-				text: 'Piercing',
+				text: 'Pierce',
 				imageId: `https://github.com/BobbyNooby/AOGearBuilder/blob/typescript/static/assets/images/stats/piercing.png?raw=true`
 			},
 			resistance: {

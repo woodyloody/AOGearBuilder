@@ -25,7 +25,9 @@ export type fightingStyle =
 	| 'Boxing'
 	| 'Iron Leg'
 	| 'Cannon Fist'
-	| 'Sailor Fist'
-	| 'Thermo Fist';
+	| 'Powder Fist'
+	| 'Sailor Style'
+	| 'Thermo Fist'
+	| 'Vanishing Style';
 
 export type statBuildStats = { name: string; magicNo: number; fightingStyleNo: number };

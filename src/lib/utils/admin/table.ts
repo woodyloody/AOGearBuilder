@@ -169,23 +169,23 @@ export class Table {
 			},
 			agility: {
 				bool: false,
-				text: 'Agility',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/agility.png`
+				text: 'Range',
+				imageId: `https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/c/c5/Range.png`
 			},
 			attackSpeed: {
 				bool: false,
-				text: 'Attack Speed',
+				text: 'Dexterity',
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/attackSpeed.png`
 			},
 			attackSize: {
 				bool: false,
-				text: 'Attack Size',
+				text: 'Size',
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/attackSize.png`
 			},
 			intensity: {
 				bool: false,
-				text: 'Intensity',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/intensity.png`
+				text: 'Haste',
+				imageId: `https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/3/35/Haste.png`
 			},
 			regeneration: {
 				bool: false,
@@ -194,7 +194,7 @@ export class Table {
 			},
 			piercing: {
 				bool: false,
-				text: 'Piercing',
+				text: 'Pierce',
 				imageId: `https://github.com/BobbyNooby/AOGearBuilder/blob/typescript/static/assets/images/stats/piercing.png?raw=true`
 			},
 			resistance: {
@@ -215,23 +215,23 @@ export class Table {
 			},
 			agilityIncrement: {
 				bool: false,
-				text: 'Agility Increment',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/agility.png`
+				text: 'Range Increment',
+				imageId: `https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/c/c5/Range.png`
 			},
 			attackSpeedIncrement: {
 				bool: false,
-				text: 'Attack Speed Increment',
+				text: 'Dexterity Increment',
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/attackSpeed.png`
 			},
 			attackSizeIncrement: {
 				bool: false,
-				text: 'Attack Size Increment',
+				text: 'Size Increment',
 				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/attackSize.png`
 			},
 			intensityIncrement: {
 				bool: false,
-				text: 'Intensity Increment',
-				imageId: `https://raw.githubusercontent.com/BobbyNooby/AOGearBuilder/master/static/assets/images/stats/intensity.png`
+				text: 'Haste Increment',
+				imageId: `https://static.wikia.nocookie.net/roblox-arcane-odyssey/images/3/35/Haste.png`
 			},
 			regenerationIncrement: {
 				bool: false,
@@ -240,7 +240,7 @@ export class Table {
 			},
 			piercingIncrement: {
 				bool: false,
-				text: 'Piercing Increment',
+				text: 'Pierce Increment',
 				imageId: `https://github.com/BobbyNooby/AOGearBuilder/blob/typescript/static/assets/images/stats/piercing.png?raw=true`
 			},
 			resistanceIncrement: {
@@ -334,7 +334,7 @@ export class Table {
 			ramSpeed: {
 				bool: false,
 				text: 'Ram Speed',
-				imageId: ""
+				imageId: ''
 			},
 			hullArmorSlot: {
 				bool: false,
