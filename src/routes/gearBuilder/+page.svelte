@@ -215,7 +215,7 @@
 															updatePage();
 														}}
 													>
-														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel) as statsAtLevel}
+														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel.filter((x) => x.level <= data.config.maxLevel)) as statsAtLevel}
 															<option
 																disabled={statsAtLevel.level > SessionPlayer.level}
 																transition:fade={{ duration: 69 }}

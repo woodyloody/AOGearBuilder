@@ -9,6 +9,7 @@
 	import { base } from '$app/paths';
 	import StatWithBar from './StatWithBar.svelte';
 	import EpHelp from './EPHelp.svelte';
+	import { getContext } from 'svelte';
 
 	export let fullItem: ArmorItem | GemItem | EnchantItem | ModifierItem | any,
 		showName: boolean,
@@ -22,6 +23,8 @@
 		shipPartType: 'base' | 'enchant' | undefined = undefined,
 		statsShown: 'stats' | 'weapon' | 'both' = 'both';
 	// This document is a tooltip for the items
+
+	const config: any = getContext('config');
 
 	let item = fullItem;
 	if (item.mainType && item.mainType == 'Enchant') {
@@ -176,7 +179,9 @@
 			) {
 				if (item.statsPerLevel.length > 1) {
 					minStats = filterData(item.statsPerLevel[0]);
-					maxStats = filterData(item.statsPerLevel[item.statsPerLevel.length - 1]);
+					maxStats = filterData(
+						item.statsPerLevel.filter((x) => x.level <= config.maxLevel).at(-1)
+					);
 
 					if (item.statType == 'Vitality') {
 						for (let itemstat of [minStats, maxStats]) {

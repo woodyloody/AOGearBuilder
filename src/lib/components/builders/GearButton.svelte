@@ -101,10 +101,10 @@
 			return a.name.localeCompare(b.name);
 		} else if ($sortType === 'maxLevelHighest') {
 			//Sort item.maxLevel from Highest to Lowest
-			return b.maxlevel - a.maxlevel;
+			return b.maxLevel - a.maxLevel;
 		} else if ($sortType === 'maxLevelLowest') {
 			//Sort item.maxLevel from Lowest to Highest
-			return a.maxlevel - b.maxlevel;
+			return a.maxLevel - b.maxLevel;
 		} else if ($sortType === 'statHighest' || $sortType === 'statLowest') {
 			//Sort item.maxLevel from Lowest to Highest
 			if (['Accessory', 'Chestplate', 'Pants'].includes(a.mainType)) {

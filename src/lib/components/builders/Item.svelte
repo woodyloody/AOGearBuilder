@@ -8,6 +8,7 @@
 	import { isMobile } from '$lib/utils/mobileStore';
 	import type { CurrentShipBuild } from '$lib/shipBuilder/ShipClass';
 	import ItemImage from '../shared/ItemImage.svelte';
+	import { getContext } from 'svelte';
 
 	export let item: ArmorItem | GemItem | EnchantItem | ModifierItem | any,
 		slotKey: 'accessory1' | 'accessory2' | 'accessory3' | 'chestplate' | 'pants',
@@ -18,6 +19,8 @@
 		shipPartType: 'base' | 'enchant' | undefined = undefined,
 		toggleMenu: () => void,
 		updatePage: () => void;
+
+	const config: any = getContext('config');
 
 	let isHovering = false;
 	let mousePosition = { x: 0, y: 0 };
@@ -67,7 +70,8 @@
 		if (!item.hasOwnProperty('minLevel') && !item.hasOwnProperty('maxLevel')) {
 			levelRange = '';
 		} else {
-			levelRange = item.minLevel + ' - ' + item.maxLevel;
+			levelRange =
+				item.minLevel + ' - ' + Math.min(item.maxLevel, Math.floor(config.maxLevel / 10) * 10);
 		}
 
 		setBoxPositionOverflow();
