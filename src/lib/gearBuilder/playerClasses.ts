@@ -223,6 +223,11 @@ export class Player {
 			weapons: this.weaponPoints / totalStats
 		};
 
+		const isSavant =
+			[percentages.vitality, percentages.magic, percentages.strength, percentages.weapons].filter(
+				(value) => value >= 0.15
+			).length >= 3;
+
 		const buildTypes: {
 			type: string;
 			color: string;
@@ -233,22 +238,22 @@ export class Player {
 			{
 				type: 'Oracle',
 				color: '#00FC00',
-				conditions: [({ vitality }) => vitality > 0.6]
+				conditions: [({ vitality }) => vitality > 0.6 || (isSavant && vitality > 0.5)]
 			},
 			{
 				type: 'Berserker',
 				color: '#FF6060',
-				conditions: [({ strength }) => strength > 0.6]
+				conditions: [({ strength }) => strength > 0.6 || (isSavant && strength > 0.5)]
 			},
 			{
 				type: 'Warrior',
 				color: '#F7F75E',
-				conditions: [({ weapons }) => weapons > 0.6]
+				conditions: [({ weapons }) => weapons > 0.6 || (isSavant && weapons > 0.5)]
 			},
 			{
 				type: 'Mage',
 				color: '#02B1EB',
-				conditions: [({ magic }) => magic > 0.6]
+				conditions: [({ magic }) => magic > 0.6 || (isSavant && magic > 0.5)]
 			},
 			{
 				type: 'Juggernaut',
@@ -283,11 +288,7 @@ export class Player {
 			{
 				type: 'Savant',
 				color: '#F9DBF8',
-				conditions: [
-					({ vitality, magic, strength, weapons }) =>
-						(vitality >= 0.15 || magic >= 0.15 || strength >= 0.15 || weapons >= 0.15) &&
-						[vitality, magic, strength, weapons].filter((value) => value >= 0.15).length >= 3
-				]
+				conditions: [() => isSavant]
 			}
 		];
 
