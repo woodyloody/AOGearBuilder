@@ -1,3 +1,4 @@
+import { imbuedStatRelations, validStatKeys } from '$lib/dataConstants';
 import { noneGem, noneModifier } from '$lib/gearBuilder/defaultGears';
 import type {
 	ArmorItem,
@@ -295,6 +296,24 @@ export class ArmorSlot {
 				finalSlotStats['power'] += Math.floor(modifierStats['powerIncrement'] * levelMultiplier);
 				this.chosenAtlanteanAttribute = statRelations['powerIncrement'];
 				finalSlotStats.insanity += modifierStats.insanity;
+			} else if (modifierStats.name == 'Imbued') {
+				let count = 0;
+
+				for (let stat of Object.keys(imbuedStatRelations)) {
+					if (stat in armorStats && armorStats[stat] > 0) {
+						count += 1;
+					}
+				}
+
+				for (let stat of Object.keys(armorStats)) {
+					if (armorStats[stat] > 0) {
+						finalSlotStats[stat] += Math.floor(
+							modifierStats[imbuedStatRelations[stat]] *
+								levelMultiplier *
+								((0.8 + 0.2 * count) / count)
+						);
+					}
+				}
 			} else {
 				// Regular modifier calculations
 				this.chosenAtlanteanAttribute = '';

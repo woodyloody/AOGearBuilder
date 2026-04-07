@@ -4,7 +4,7 @@
 	import { filterData } from '$lib/utils/filterData';
 	import type { Player } from '$lib/gearBuilder/playerClasses';
 	import StatWithPercentEffectiveness from './StatWithPercentEffectiveness.svelte';
-	import { staticImagesRootFolder } from '$lib/dataConstants';
+	import { imbuedStatRelations, staticImagesRootFolder } from '$lib/dataConstants';
 	import type { CurrentShipBuild } from '$lib/shipBuilder/ShipClass';
 	import { base } from '$app/paths';
 	import StatWithBar from './StatWithBar.svelte';
@@ -242,6 +242,8 @@
 				let returnStat = {};
 				let increments = filterData(item);
 
+				let slot = player.build.slots[slotKey];
+
 				const statRelations = {
 					powerIncrement: 'power',
 					defenseIncrement: 'defense',
@@ -255,7 +257,37 @@
 				};
 
 				//Regular Modifiers / Enchants
-				if (item.name !== 'Atlantean Essence') {
+				if (item.name == 'Atlantean Essence') {
+					// Atlantean Calcs
+					const statKey = Object.keys(statRelations).find(
+						(key) => statRelations[key] === atlanteanAttribute
+					);
+
+					returnStat[atlanteanAttribute] = Math.floor((increments[statKey] * slot.armorLevel) / 10);
+					returnStat['insanity'] = 1;
+
+					chosenStat = returnStat;
+				} else if (item.name == 'Imbued') {
+					let count = 0;
+
+					let armorStats = filterData(slot.getArmorDataAtLevel(slot.armorLevel));
+
+					for (let stat of Object.keys(imbuedStatRelations)) {
+						if (stat in armorStats && armorStats[stat] > 0) {
+							count += 1;
+						}
+					}
+
+					for (let stat of Object.keys(armorStats)) {
+						if (armorStats[stat] > 0) {
+							returnStat[stat] = Math.floor(
+								increments[imbuedStatRelations[stat]] *
+									(slot.armorLevel / 10) *
+									((0.8 + 0.2 * count) / count)
+							);
+						}
+					}
+				} else {
 					for (const stat in increments) {
 						if (['warding', 'insanity', 'drawback'].includes(stat)) {
 							//Static stats
@@ -263,22 +295,10 @@
 						} else {
 							//Incremental Stats
 							returnStat[statRelations[stat]] = Math.floor(
-								(increments[stat] * player.build.slots[slotKey].armorLevel) / 10
+								(increments[stat] * slot.armorLevel) / 10
 							);
 						}
 					}
-				} else {
-					// Atlantean Calcs
-					const statKey = Object.keys(statRelations).find(
-						(key) => statRelations[key] === atlanteanAttribute
-					);
-
-					returnStat[atlanteanAttribute] = Math.floor(
-						(increments[statKey] * player.build.slots[slotKey].armorLevel) / 10
-					);
-					returnStat['insanity'] = 1;
-
-					chosenStat = returnStat;
 				}
 
 				chosenStat = returnStat;

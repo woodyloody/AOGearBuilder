@@ -133,3 +133,15 @@ export const listOfMagics: magic[] = [
 	'Wind',
 	'Wood'
 ];
+
+export const imbuedStatRelations: any = {
+	power: 'powerIncrement',
+	defense: 'defenseIncrement',
+	agility: 'agilityIncrement',
+	attackSpeed: 'attackSpeedIncrement',
+	attackSize: 'attackSizeIncrement',
+	intensity: 'intensityIncrement',
+	regeneration: 'regenerationIncrement',
+	piercing: 'piercingIncrement',
+	resistance: 'resistanceIncrement'
+};
