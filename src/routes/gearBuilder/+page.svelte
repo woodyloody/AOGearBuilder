@@ -289,7 +289,7 @@
 															updatePage();
 														}}
 													>
-														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel) as statsAtLevel}
+														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel.filter((x) => x.level <= data.config.maxLevel)) as statsAtLevel}
 															<option
 																disabled={statsAtLevel.level > SessionPlayer.level}
 																transition:fade={{ duration: 69 }}
@@ -441,7 +441,7 @@
 														updatePage();
 													}}
 												>
-													{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel) as statsAtLevel}
+													{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel.filter((x) => x.level <= data.config.maxLevel)) as statsAtLevel}
 														<option
 															disabled={statsAtLevel.level > SessionPlayer.level}
 															transition:fade={{ duration: 69 }}
@@ -484,7 +484,7 @@
 											</div>
 											<div class="flex flex-row">
 												<div class="grid grid-cols-3">
-													{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
+													{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel.filter((x) => x.level <= data.config.maxLevel)) as statsAtLevel}
 														<GearButton
 															database={data.Database}
 															currentItem={gem}
