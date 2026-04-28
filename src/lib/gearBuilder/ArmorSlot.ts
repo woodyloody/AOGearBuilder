@@ -10,6 +10,7 @@ import type {
 } from '$lib/gearBuilder/itemTypes';
 
 import { filterData } from '$lib/utils/filterData';
+import { getContext } from 'svelte';
 
 import type { CurrentBuild } from './CurrentBuild';
 
@@ -19,6 +20,7 @@ function clamp(value: number, min: number, max: number) {
 
 export class ArmorSlot {
 	database: anyItem[] = [];
+	config: any;
 
 	parentBuild: CurrentBuild;
 	armor: ArmorItem;
@@ -35,6 +37,7 @@ export class ArmorSlot {
 	) {
 		this.parentBuild = parentBuild;
 		this.database = this.parentBuild.parentPlayer.database;
+		this.config = getContext('config');
 
 		this.armor = armor;
 
@@ -308,9 +311,14 @@ export class ArmorSlot {
 				for (let stat of Object.keys(armorStats)) {
 					if (armorStats[stat] > 0) {
 						finalSlotStats[stat] += Math.floor(
-							modifierStats[imbuedStatRelations[stat]] *
-								levelMultiplier *
-								((0.8 + 0.2 * count) / count)
+							Math.floor(
+								((0.15 * this.armorLevel) / count) *
+									(0.8 + 0.2 * Math.min(count, 6)) *
+									this.config.scaling.toStat[stat in this.config.scaling.toStat ? stat : 'substat']
+							) *
+								this.config.scaling.imbuedModMulti[
+									stat in this.config.scaling.imbuedModMulti ? stat : 'substat'
+								]
 						);
 					}
 				}

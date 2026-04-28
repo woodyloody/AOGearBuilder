@@ -281,9 +281,14 @@
 					for (let stat of Object.keys(armorStats)) {
 						if (armorStats[stat] > 0) {
 							returnStat[stat] = Math.floor(
-								increments[imbuedStatRelations[stat]] *
-									(slot.armorLevel / 10) *
-									((0.8 + 0.2 * count) / count)
+								Math.floor(
+									((0.15 * slot.armorLevel) / count) *
+										(0.8 + 0.2 * Math.min(count, 6)) *
+										config.scaling.toStat[stat in config.scaling.toStat ? stat : 'substat']
+								) *
+									config.scaling.imbuedModMulti[
+										stat in config.scaling.imbuedModMulti ? stat : 'substat'
+									]
 							);
 						}
 					}
