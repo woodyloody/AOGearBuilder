@@ -87,12 +87,19 @@ export function calculateStatScaling(
 		stat in config.scaling.imbuedStatType[imbuedStatType]
 	) {
 		value += Math.floor(
-			config.scaling.imbuedStatType[imbuedStatType][stat] *
-				config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
-				config.scaling.imbuedMulti[stat in config.scaling['toStat'] ? stat : 'substat'] *
-				level *
+			Math.floor(
+				Math.floor(
+					config.scaling.imbuedStatType[imbuedStatType][stat] *
+						level *
+						config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
+						1.5
+				) * config.scaling.imbuedMulti[stat in config.scaling.imbuedMulti ? stat : 'substat']
+			) *
 				((item.mainType == 'Accessory' || item.mainType == 'Pants') &&
-				!(item.name?.split(' ').includes('Arcsphere') || item.name?.split(' ').includes('Bracelet'))
+				!(
+					item.name?.split(' ').includes('Arcsphere') ||
+					(item.name?.split(' ').includes('Arcanium') && item.name?.split(' ').includes('Bracelet'))
+				)
 					? 0.75
 					: 1)
 		);
@@ -109,7 +116,7 @@ export function findImbue(item: anyItem, config: any): string {
 		'imbuedStatType' in config.scaling
 	) {
 		for (let imbue of Object.keys(config.scaling.imbuedStatType)) {
-			if (item.name?.toLowerCase().startsWith(imbue+" ")) {
+			if (item.name?.toLowerCase().startsWith(imbue + ' ')) {
 				imbuedStatType = imbue;
 				break;
 			}
