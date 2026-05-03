@@ -57,6 +57,13 @@
 	{/if}
 	{#if loaded}
 		<img class="w-full h-full object-contain" src={item.imageId} alt={item.name} />
+		{#if item.name?.startsWith('Atlantean Essence') && item.name != 'Atlantean Essence'}
+			<div class="absolute inset-0 flex items-center justify-center z-[25]">
+				<h1 class="text-center align-middle text-white">
+					{item.name?.replace('Atlantean Essence', '').replace('+', '').trim()}
+				</h1>
+			</div>
+		{/if}
 	{:else if failed}
 		<h1 class="text-center" style="color:white;">
 			{item.name || 'None'}

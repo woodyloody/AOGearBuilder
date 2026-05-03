@@ -257,13 +257,53 @@
 				};
 
 				//Regular Modifiers / Enchants
-				if (item.name == 'Atlantean Essence') {
+				if (item.name.startsWith('Atlantean Essence')) {
+					if (item.name != 'Atlantean Essence') {
+						showOnlyAtlanteanStat = false;
+						for (const stat in increments) {
+							if (['warding', 'insanity', 'drawback'].includes(stat)) {
+								//Static stats
+								returnStat[stat] = increments[stat];
+							} else {
+								//Incremental Stats
+								returnStat[statRelations[stat]] = Math.floor(
+									(increments[stat] * slot.armorLevel) / 10
+								);
+							}
+						}
+					}
+
+					let atlanteanIncrements = player.database.find((x) => x.name == 'Atlantean Essence');
+
+					const atlantenOrder = [
+						'power',
+						'defense',
+						'attackSize',
+						'attackSpeed',
+						'agility',
+						'intensity'
+					];
+
+					let preAtlanteanArmor = player.build.slots[slotKey].getSlotStats(true);
+
+					atlanteanAttribute = 'power';
+
+					//Calculations for Atlantean
+					for (const currentAttribute of atlantenOrder) {
+						if (preAtlanteanArmor[currentAttribute] == 0 && !(currentAttribute in returnStat)) {
+							atlanteanAttribute = currentAttribute;
+							break;
+						}
+					}
+
 					// Atlantean Calcs
 					const statKey = Object.keys(statRelations).find(
 						(key) => statRelations[key] === atlanteanAttribute
 					);
 
-					returnStat[atlanteanAttribute] = Math.floor((increments[statKey] * slot.armorLevel) / 10);
+					returnStat[atlanteanAttribute] = Math.floor(
+						(atlanteanIncrements[statKey] * slot.armorLevel) / 10
+					);
 					returnStat['insanity'] = 1;
 
 					chosenStat = returnStat;

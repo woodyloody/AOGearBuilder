@@ -15,7 +15,11 @@ export function getModifiers(items: anyItem[]): Record<string, boolean> {
 		if (b.id == atlanteanId) {
 			return 1;
 		}
-		return a.name.localeCompare(b.name);
+		return a.name
+			.replace('Atlantean Essence', '')
+			.replace('+', '')
+			.trim()
+			.localeCompare(b.name.replace('Atlantean Essence', '').replace('+', '').trim());
 	});
 
 	for (let mod of allModifiers) {

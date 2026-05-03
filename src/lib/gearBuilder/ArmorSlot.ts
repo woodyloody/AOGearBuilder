@@ -272,8 +272,18 @@ export class ArmorSlot {
 
 		// Modifier Calcs
 		if (!preAtlantean) {
-			modifierCalcs: if (modifierStats.name == 'Atlantean Essence') {
+			modifierCalcs: if (modifierStats.name.startsWith('Atlantean Essence')) {
+				if (modifierStats.name != 'Atlantean Essence') {
+					for (const stat in filterData(modifierStats)) {
+						finalSlotStats[statRelations[stat]] += Math.floor(
+							modifierStats[stat] * levelMultiplier
+						);
+					}
+				}
+
 				//Atlantean calcs
+
+				let atlanteanStats = this.database.find((x) => x.name == 'Atlantean Essence');
 
 				const atlantenOrder = [
 					'powerIncrement',
@@ -287,18 +297,18 @@ export class ArmorSlot {
 				for (const stat of atlantenOrder) {
 					if (finalSlotStats[statRelations[stat]] == 0) {
 						finalSlotStats[statRelations[stat]] += Math.floor(
-							modifierStats[stat] * levelMultiplier
+							atlanteanStats[stat] * levelMultiplier
 						);
 						this.chosenAtlanteanAttribute = statRelations[stat];
-						finalSlotStats.insanity += modifierStats.insanity;
+						finalSlotStats.insanity += atlanteanStats.insanity;
 						break modifierCalcs;
 					}
 				}
 
 				// Only happens if all have value
-				finalSlotStats['power'] += Math.floor(modifierStats['powerIncrement'] * levelMultiplier);
+				finalSlotStats['power'] += Math.floor(atlanteanStats['powerIncrement'] * levelMultiplier);
 				this.chosenAtlanteanAttribute = statRelations['powerIncrement'];
-				finalSlotStats.insanity += modifierStats.insanity;
+				finalSlotStats.insanity += atlanteanStats.insanity;
 			} else if (modifierStats.name == 'Imbued') {
 				let count = 0;
 
