@@ -21,7 +21,8 @@ export const listOfFightingStyles: fightingStyle[] = [
 	'Cannon Fist',
 	'Powder Fist',
 	'Sailor Style',
-	'Thermo Fist'
+	'Thermo Fist',
+	'Vanishing Style'
 ];
 
 export const fightingStyleRecords: Record<fightingStyle, fightingStyleDetails> = {
