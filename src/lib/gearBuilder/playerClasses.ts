@@ -228,7 +228,8 @@ export class Player {
 		const isSavant =
 			stats.filter((value) => value >= 0.15).length >= 3 ||
 			(!stats.some((value) => value >= 0.6) &&
-				!(stats.filter((value) => value >= 0.4).length >= 2));
+				!(stats.filter((value) => value >= 0.4).length >= 2) &&
+				stats.filter((value) => value > 0).length > 0);
 
 		const buildTypes: {
 			type: string;
@@ -240,22 +241,22 @@ export class Player {
 			{
 				type: 'Oracle',
 				color: '#00FC00',
-				conditions: [({ vitality }) => vitality >= 0.6 || (isSavant && vitality >= 0.5)]
+				conditions: [({ vitality }) => vitality > 0.6 || (isSavant && vitality >= 0.5)]
 			},
 			{
 				type: 'Berserker',
 				color: '#FF6060',
-				conditions: [({ strength }) => strength >= 0.6 || (isSavant && strength >= 0.5)]
+				conditions: [({ strength }) => strength > 0.6 || (isSavant && strength >= 0.5)]
 			},
 			{
 				type: 'Warrior',
 				color: '#F7F75E',
-				conditions: [({ weapons }) => weapons >= 0.6 || (isSavant && weapons >= 0.5)]
+				conditions: [({ weapons }) => weapons > 0.6 || (isSavant && weapons >= 0.5)]
 			},
 			{
 				type: 'Mage',
 				color: '#02B1EB',
-				conditions: [({ magic }) => magic >= 0.6 || (isSavant && magic >= 0.5)]
+				conditions: [({ magic }) => magic > 0.6 || (isSavant && magic >= 0.5)]
 			},
 			{
 				type: 'Juggernaut',

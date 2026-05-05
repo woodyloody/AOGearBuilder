@@ -4,7 +4,7 @@ export const statBuilds: Record<string, statBuildStats> = {
 	None: {
 		name: 'None',
 		magicNo: 1,
-		fightingStyleNo: 0
+		fightingStyleNo: 1
 	},
 	Oracle: {
 		name: 'Oracle',
