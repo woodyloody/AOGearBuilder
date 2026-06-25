@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { isMobile } from '$lib/utils/mobileStore';
 	import { writable } from 'svelte/store';
-	import { calculateBaseline, calculateSubstatEfficiency, evaluateValue } from '$lib/utils/calculateSubstatEfficiency';
+	import {
+		calculateBaseline,
+		calculateSubstatEfficiency,
+		evaluateValue
+	} from '$lib/utils/calculateSubstatEfficiency';
 	import type { Player } from '$lib/gearBuilder/playerClasses';
 	import { fade } from 'svelte/transition';
-	import { staticImagesRootFolder } from '$lib/dataConstants';
+	import { newStatNames, staticImagesRootFolder } from '$lib/dataConstants';
 	import { camelCaseToWords, capitalizeEachWord } from '$lib/utils/admin/stringUtils';
 	import { getContext } from 'svelte';
 
@@ -83,28 +87,24 @@
 		for (let [key, value] of Object.entries(
 			config.efficiencies.values as Record<string, Record<string, string>>
 		)) {
-			if (key == "baseline") {
-				values[key] = calculateBaseline(chosenStat[stat],
+			if (key == 'baseline') {
+				values[key] = calculateBaseline(
+					chosenStat[stat],
 					player,
-					config.efficiencies.formulas).toString()
+					config.efficiencies.formulas
+				).toString();
 			} else {
 				values[key] = value.value;
 			}
 		}
 
-		values[stat] = evaluateValue(stat, values).toString()+"*baseline";
+		values[stat] = evaluateValue(stat, values).toString() + '*baseline';
 
-		substatEfficiencies[stat] = calculateSubstatEfficiency(
-			stat,
-			values
-		);
+		substatEfficiencies[stat] = calculateSubstatEfficiency(stat, values);
 
 		for (let [key, value] of Object.entries(config.efficiencies.values as Record<string, number>)) {
 			if (key.startsWith(stat)) {
-				substatEfficiencies[key] = calculateSubstatEfficiency(
-					key,
-					values
-				);
+				substatEfficiencies[key] = calculateSubstatEfficiency(key, values);
 			}
 		}
 
@@ -178,7 +178,9 @@
 							{statKey != value[0] ? ' / ' : ''}{statKey in config.efficiencies.values &&
 							'name' in config.efficiencies.values[statKey]
 								? config.efficiencies.values[statKey]['name']
-								: capitalizeEachWord(camelCaseToWords(statKey))}
+								: capitalizeEachWord(
+										camelCaseToWords(statKey in newStatNames ? newStatNames[statKey] : statKey)
+									)}
 						{/each}
 						: {formatEfficiency(substatEfficiencies[value[0]])}%<br />
 					{/each}

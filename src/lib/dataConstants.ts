@@ -145,3 +145,11 @@ export const imbuedStatRelations: any = {
 	piercing: 'piercingIncrement',
 	resistance: 'resistanceIncrement'
 };
+
+export const newStatNames: Record<string, string> = {
+	agility: 'range',
+	attackSpeed: 'dexterity',
+	attackSize: 'size',
+	intensity: 'haste',
+	piercing: 'pierce'
+};

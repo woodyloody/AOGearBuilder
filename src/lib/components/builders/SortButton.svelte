@@ -2,7 +2,7 @@
 	import { sortType, sortTypeStat } from '$lib/utils/filterSortStore';
 	import { fade } from 'svelte/transition';
 	import { sortList } from '$lib/data/sortList';
-	import { staticImagesRootFolder } from '$lib/dataConstants';
+	import { newStatNames, staticImagesRootFolder } from '$lib/dataConstants';
 	import { camelCaseToWords, capitalizeEachWord } from '$lib/utils/admin/stringUtils';
 
 	export let type: keyof typeof validStats = 'gear';
@@ -116,7 +116,9 @@
 									}}
 								>
 									<p>
-										{capitalizeEachWord(camelCaseToWords(stat))}
+										{capitalizeEachWord(
+											camelCaseToWords(stat in newStatNames ? newStatNames[stat] : stat)
+										)}
 									</p>
 								</button>
 							</div>
