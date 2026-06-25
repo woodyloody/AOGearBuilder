@@ -10,6 +10,7 @@
 	import StatWithBar from './StatWithBar.svelte';
 	import EpHelp from './EPHelp.svelte';
 	import { getContext } from 'svelte';
+	import { floorDecimal } from '$lib/utils/floorDecimal';
 
 	export let fullItem: ArmorItem | GemItem | EnchantItem | ModifierItem | any,
 		showName: boolean,
@@ -187,14 +188,13 @@
 						for (let itemstat of [minStats, maxStats]) {
 							for (const stat in itemstat) {
 								if (stat != 'warding' && stat != 'insanity') {
-									item[stat] = Math.floor(
+									item[stat] =
 										item[stat] *
-											Math.min(
-												// Vetex given formula Math.clamp((vitality/maxstatpoints)*3, 0.3, 1)
-												Math.max((player.vitalityPoints / (player.level * 2)) * 3, 0.3),
-												1
-											)
-									);
+										Math.min(
+											// Vetex given formula Math.clamp((vitality/maxstatpoints)*3, 0.3, 1)
+											Math.max((player.vitalityPoints / (player.level * 2)) * 3, 0.3),
+											1
+										);
 								}
 							}
 						}
@@ -221,14 +221,13 @@
 					if (item.statType == 'Vitality') {
 						for (const stat in chosenStat) {
 							if (stat != 'warding' && stat != 'insanity') {
-								chosenStat[stat] = Math.floor(
+								chosenStat[stat] =
 									chosenStat[stat] *
-										Math.min(
-											// Vetex given formula Math.clamp((vitality/maxstatpoints)*3, 0.3, 1)
-											Math.max((player.vitalityPoints / (player.level * 2)) * 3, 0.3),
-											1
-										)
-								);
+									Math.min(
+										// Vetex given formula Math.clamp((vitality/maxstatpoints)*3, 0.3, 1)
+										Math.max((player.vitalityPoints / (player.level * 2)) * 3, 0.3),
+										1
+									);
 							}
 						}
 					}
@@ -266,9 +265,7 @@
 								returnStat[stat] = increments[stat];
 							} else {
 								//Incremental Stats
-								returnStat[statRelations[stat]] = Math.floor(
-									(increments[stat] * slot.armorLevel) / 10
-								);
+								returnStat[statRelations[stat]] = (increments[stat] * slot.armorLevel) / 10;
 							}
 						}
 					}
@@ -301,9 +298,7 @@
 						(key) => statRelations[key] === atlanteanAttribute
 					);
 
-					returnStat[atlanteanAttribute] = Math.floor(
-						(atlanteanIncrements[statKey] * slot.armorLevel) / 10
-					);
+					returnStat[atlanteanAttribute] = (atlanteanIncrements[statKey] * slot.armorLevel) / 10;
 					returnStat['insanity'] = 1;
 
 					chosenStat = returnStat;
@@ -320,16 +315,13 @@
 
 					for (let stat of Object.keys(armorStats)) {
 						if (armorStats[stat] > 0) {
-							returnStat[stat] = Math.floor(
-								Math.floor(
-									((0.15 * slot.armorLevel) / count) *
-										(0.8 + 0.2 * Math.min(count, 6)) *
-										config.scaling.toStat[stat in config.scaling.toStat ? stat : 'substat']
-								) *
-									config.scaling.imbuedModMulti[
-										stat in config.scaling.imbuedModMulti ? stat : 'substat'
-									]
-							);
+							returnStat[stat] =
+								((0.15 * slot.armorLevel) / count) *
+								(0.8 + 0.2 * Math.min(count, 6)) *
+								config.scaling.toStat[stat in config.scaling.toStat ? stat : 'substat'] *
+								config.scaling.imbuedModMulti[
+									stat in config.scaling.imbuedModMulti ? stat : 'substat'
+								];
 						}
 					}
 				} else {
@@ -339,9 +331,7 @@
 							returnStat[stat] = increments[stat];
 						} else {
 							//Incremental Stats
-							returnStat[statRelations[stat]] = Math.floor(
-								(increments[stat] * slot.armorLevel) / 10
-							);
+							returnStat[statRelations[stat]] = (increments[stat] * slot.armorLevel) / 10;
 						}
 					}
 				}
@@ -408,6 +398,28 @@
 		'reloadTime',
 		'ramSpeed'
 	];
+
+	for (const stat in itemStats) {
+		if (chosenStat.hasOwnProperty(stat)) {
+			if (typeof chosenStat[stat] === 'number') {
+				chosenStat[stat] = floorDecimal(chosenStat[stat], 1);
+			}
+
+			if (typeof chosenStat[stat] === 'string') {
+				chosenStat[stat] = chosenStat[stat]
+					.split('~')
+					.map((part) => {
+						const trimmed = part.trim();
+						const num = parseFloat(trimmed);
+
+						if (isNaN(num)) return trimmed;
+
+						return floorDecimal(num, 1).toString();
+					})
+					.join(' ~ ');
+			}
+		}
+	}
 </script>
 
 {#if true}

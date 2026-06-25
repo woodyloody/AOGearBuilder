@@ -73,11 +73,10 @@ export function calculateStatScaling(
 	}
 
 	if (stat in item.scaling) {
-		value += Math.floor(
+		value +=
 			item.scaling[stat] *
-				config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
-				level
-		);
+			config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
+			level;
 	}
 
 	if (
@@ -86,23 +85,19 @@ export function calculateStatScaling(
 		'imbuedStatType' in config.scaling &&
 		stat in config.scaling.imbuedStatType[imbuedStatType]
 	) {
-		value += Math.floor(
-			Math.floor(
-				Math.floor(
-					config.scaling.imbuedStatType[imbuedStatType][stat] *
-						level *
-						config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
-						1.5
-				) * config.scaling.imbuedMulti[stat in config.scaling.imbuedMulti ? stat : 'substat']
-			) *
-				((item.mainType == 'Accessory' || item.mainType == 'Pants') &&
-				!(
-					item.name?.split(' ').includes('Arcsphere') ||
-					(item.name?.split(' ').includes('Arcanium') && item.name?.split(' ').includes('Bracelet'))
-				)
-					? 0.75
-					: 1)
-		);
+		value +=
+			config.scaling.imbuedStatType[imbuedStatType][stat] *
+			level *
+			config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
+			1.5 *
+			config.scaling.imbuedMulti[stat in config.scaling.imbuedMulti ? stat : 'substat'] *
+			((item.mainType == 'Accessory' || item.mainType == 'Pants') &&
+			!(
+				item.name?.split(' ').includes('Arcsphere') ||
+				(item.name?.split(' ').includes('Arcanium') && item.name?.split(' ').includes('Bracelet'))
+			)
+				? 0.75
+				: 1);
 	}
 
 	return value;

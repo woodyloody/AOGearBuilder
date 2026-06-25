@@ -13,6 +13,7 @@ import { filterData } from '$lib/utils/filterData';
 import { getContext } from 'svelte';
 
 import type { CurrentBuild } from './CurrentBuild';
+import { floorDecimal } from '$lib/utils/floorDecimal';
 
 function clamp(value: number, min: number, max: number) {
 	return Math.max(min, Math.min(max, value));
@@ -239,7 +240,7 @@ export class ArmorSlot {
 		}
 
 		for (const stat in armorStats) {
-			finalSlotStats[stat] += Math.floor(armorStats[stat] * vitalityMultiplier);
+			finalSlotStats[stat] += armorStats[stat] * vitalityMultiplier;
 		}
 
 		for (const gem of gemsStats) {
@@ -265,9 +266,8 @@ export class ArmorSlot {
 		};
 
 		for (const stat in enchantStats) {
-			finalSlotStats[statRelations[stat]] += Math.floor(
-				enchantStats[stat] * (nonIncrementalStats.includes(stat) ? 1 : levelMultiplier)
-			);
+			finalSlotStats[statRelations[stat]] +=
+				enchantStats[stat] * (nonIncrementalStats.includes(stat) ? 1 : levelMultiplier);
 		}
 
 		// Modifier Calcs
@@ -275,9 +275,7 @@ export class ArmorSlot {
 			modifierCalcs: if (modifierStats.name.startsWith('Atlantean Essence')) {
 				if (modifierStats.name != 'Atlantean Essence') {
 					for (const stat in filterData(modifierStats)) {
-						finalSlotStats[statRelations[stat]] += Math.floor(
-							modifierStats[stat] * levelMultiplier
-						);
+						finalSlotStats[statRelations[stat]] += modifierStats[stat] * levelMultiplier;
 					}
 				}
 
@@ -296,9 +294,8 @@ export class ArmorSlot {
 
 				for (const stat of atlantenOrder) {
 					if (finalSlotStats[statRelations[stat]] == 0) {
-						finalSlotStats[statRelations[stat]] += Math.floor(
-							atlanteanStats[stat] * levelMultiplier
-						);
+						finalSlotStats[statRelations[stat]] += atlanteanStats[stat] * levelMultiplier;
+
 						this.chosenAtlanteanAttribute = statRelations[stat];
 						finalSlotStats.insanity += atlanteanStats.insanity;
 						break modifierCalcs;
@@ -306,10 +303,11 @@ export class ArmorSlot {
 				}
 
 				// Only happens if all have value
-				finalSlotStats['power'] += Math.floor(atlanteanStats['powerIncrement'] * levelMultiplier);
+				finalSlotStats['power'] += atlanteanStats['powerIncrement'] * levelMultiplier;
 				this.chosenAtlanteanAttribute = statRelations['powerIncrement'];
 				finalSlotStats.insanity += atlanteanStats.insanity;
 			} else if (modifierStats.name == 'Imbued') {
+				this.chosenAtlanteanAttribute = '';
 				let count = 0;
 
 				for (let stat of Object.keys(imbuedStatRelations)) {
@@ -320,24 +318,27 @@ export class ArmorSlot {
 
 				for (let stat of Object.keys(armorStats)) {
 					if (armorStats[stat] > 0) {
-						finalSlotStats[stat] += Math.floor(
-							Math.floor(
-								((0.15 * this.armorLevel) / count) *
-									(0.8 + 0.2 * Math.min(count, 6)) *
-									this.config.scaling.toStat[stat in this.config.scaling.toStat ? stat : 'substat']
-							) *
-								this.config.scaling.imbuedModMulti[
-									stat in this.config.scaling.imbuedModMulti ? stat : 'substat'
-								]
-						);
+						finalSlotStats[stat] +=
+							((0.15 * this.armorLevel) / count) *
+							(0.8 + 0.2 * Math.min(count, 6)) *
+							this.config.scaling.toStat[stat in this.config.scaling.toStat ? stat : 'substat'] *
+							this.config.scaling.imbuedModMulti[
+								stat in this.config.scaling.imbuedModMulti ? stat : 'substat'
+							];
 					}
 				}
 			} else {
 				// Regular modifier calculations
 				this.chosenAtlanteanAttribute = '';
 				for (const stat in filterData(modifierStats)) {
-					finalSlotStats[statRelations[stat]] += Math.floor(modifierStats[stat] * levelMultiplier);
+					finalSlotStats[statRelations[stat]] += modifierStats[stat] * levelMultiplier;
 				}
+			}
+		}
+
+		for (const stat of Object.values(statRelations)) {
+			if (finalSlotStats.hasOwnProperty(stat)) {
+				finalSlotStats[stat] = floorDecimal(finalSlotStats[stat], 1);
 			}
 		}
 
