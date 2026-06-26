@@ -7,7 +7,7 @@ export function calculateEfficiencyPoints(stats: ItemStats, playerLevel: number)
 
 	for (const stat in stats) {
 		if (stat == 'power') {
-			efficiencyPoints += stats[stat] * 3;
+			efficiencyPoints += stats[stat] / 0.3;
 		} else if (stat == 'defense') {
 			efficiencyPoints += stats[stat] * (1 / 3);
 		} else if (stat == 'insanity') {

@@ -184,20 +184,6 @@
 						{/each}
 						: {formatEfficiency(substatEfficiencies[value[0]])}%<br />
 					{/each}
-					{#if stat == 'regeneration'}
-						<br />
-						<span class=" mt-8">Health gained per tick</span><br />
-						Out of Combat : {(
-							player.health *
-							0.01 *
-							(substatEfficiencies['regeneration'] / 100)
-						).toFixed(2)}<br />
-						In Combat : {(
-							(91 + player.level * 7 + player.vitalityPoints * 4) *
-							0.01 *
-							(substatEfficiencies['regeneration'] / 100)
-						).toFixed(2)}
-					{/if}
 				</p>
 			</div>
 		</div>

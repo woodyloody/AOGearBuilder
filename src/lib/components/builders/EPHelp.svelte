@@ -6,7 +6,7 @@
 	let tooltiparrow: HTMLDivElement;
 	let menuIsActive = false;
 	let info =
-		'Efficiency Points (EP) is a score of how efficient the stats on a piece/build are. Generally higher is better. 1 Power = 3EP, 1 Defense = 1/3EP, 1 Substat = 1EP';
+		'Efficiency Points (EP) is a score of how efficient the stats on a piece/build are. Generally higher is better. 0.3 Power = 3 Defense = 1 Substat = 1EP';
 </script>
 
 {#if !$isMobile}
