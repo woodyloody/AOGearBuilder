@@ -14,6 +14,7 @@
 	import { EnchantTable, EnchantColumn } from '$lib/utils/admin/enchantTable';
 	import { calculateStatScaling, findImbue } from '$lib/utils/calculateScaling';
 	import { ScalingTable, ScalingColumn } from '$lib/utils/admin/scalingTable';
+	import NumberInput from './inputs/NumberInput.svelte';
 
 	export let item: anyItem,
 		mode: 'edit' | 'create',
@@ -687,17 +688,17 @@
 					</div>
 					<div class="grid gap-6 mb-6 md:grid-cols-4">
 						{#if tableSettings.mainType[item.mainType].gemVisibility == true || item.name == 'Gilded'}
-							<RangeInput
+							<NumberInput
 								id={'gemNo'}
 								name={'Gem No'}
 								min={0}
-								max={3}
+								max={5}
 								bind:value={item.gemNo}
 								isRequired={true}
 							/>
 						{/if}
 						{#if tableSettings.mainType[item.mainType].levelVisibility == true}
-							<RangeInput
+							<NumberInput
 								id={'minLevel'}
 								name={'Min Level'}
 								value={statsTable.minLevel}
@@ -707,12 +708,11 @@
 								onChange={setMin}
 								isRequired={true}
 							/>
-							<RangeInput
+							<NumberInput
 								id={'maxLevel'}
 								name={'Max Level'}
 								value={statsTable.maxLevel}
 								min={statsTable.minLevel}
-								max={roundDown(config.maxLevel, 10)}
 								step={10}
 								onChange={setMax}
 								isRequired={true}
