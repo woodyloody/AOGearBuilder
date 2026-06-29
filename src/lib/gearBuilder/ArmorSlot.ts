@@ -295,7 +295,10 @@ export class ArmorSlot {
 								modifierStats[statIncrement] *
 								this.config.scaling.dragon.type[imbuedStatType] *
 								this.armorLevel *
-								(this.armor.mainType == 'Accessory' || this.armor.mainType == 'Pants' ? 0.75 : 1);
+								((this.armor.mainType == 'Accessory' || this.armor.mainType == 'Pants') &&
+								!this.armor.name?.split(' ').includes('Amulet')
+									? 0.75
+									: 1);
 						}
 					} else {
 						for (const stat in filterData(modifierStats)) {
@@ -365,7 +368,10 @@ export class ArmorSlot {
 						modifierStats[statIncrement] *
 						this.config.scaling.dragon.type[imbuedStatType] *
 						this.armorLevel *
-						(this.armor.mainType == 'Accessory' || this.armor.mainType == 'Pants' ? 0.75 : 1);
+						((this.armor.mainType == 'Accessory' || this.armor.mainType == 'Pants') &&
+						!this.armor.name?.split(' ').includes('Amulet')
+							? 0.75
+							: 1);
 				}
 			} else {
 				// Regular modifier calculations

@@ -273,7 +273,10 @@
 									increments[statIncrement] *
 									config.scaling.dragon.type[imbuedStatType] *
 									slot.armorLevel *
-									(slot.armor.mainType == 'Accessory' || slot.armor.mainType == 'Pants' ? 0.75 : 1);
+									((slot.armor.mainType == 'Accessory' || slot.armor.mainType == 'Pants') &&
+									!slot.armor.name?.split(' ').includes('Amulet')
+										? 0.75
+										: 1);
 							}
 						} else {
 							showOnlyAtlanteanStat = false;
@@ -353,7 +356,10 @@
 							increments[statIncrement] *
 							config.scaling.dragon.type[imbuedStatType] *
 							slot.armorLevel *
-							(slot.armor.mainType == 'Accessory' || slot.armor.mainType == 'Pants' ? 0.75 : 1);
+							((slot.armor.mainType == 'Accessory' || slot.armor.mainType == 'Pants') &&
+							!slot.armor.name?.split(' ').includes('Amulet')
+								? 0.75
+								: 1);
 					}
 				} else {
 					for (const stat in increments) {
