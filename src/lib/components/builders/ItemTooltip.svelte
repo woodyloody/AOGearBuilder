@@ -11,6 +11,7 @@
 	import EpHelp from './EPHelp.svelte';
 	import { getContext } from 'svelte';
 	import { floorDecimal } from '$lib/utils/floorDecimal';
+	import { findDragonImbue } from '$lib/utils/calculateScaling';
 
 	export let fullItem: ArmorItem | GemItem | EnchantItem | ModifierItem | any,
 		showName: boolean,
@@ -258,14 +259,32 @@
 				//Regular Modifiers / Enchants
 				if (item.name.startsWith('Atlantean Essence')) {
 					if (item.name != 'Atlantean Essence') {
-						showOnlyAtlanteanStat = false;
-						for (const stat in increments) {
-							if (['warding', 'insanity', 'drawback'].includes(stat)) {
-								//Static stats
-								returnStat[stat] = increments[stat];
-							} else {
-								//Incremental Stats
-								returnStat[statRelations[stat]] = (increments[stat] * slot.armorLevel) / 10;
+						if (
+							config.scaling.dragon.colors.includes(
+								item.name.replace('Atlantean Essence', '').replace('+', '').trim().toLowerCase()
+							)
+						) {
+							let imbuedStatType = findDragonImbue(slot.armor, config);
+
+							for (const statIncrement in filterData(increments)) {
+								let stat = statRelations[statIncrement];
+								returnStat[stat] =
+									config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
+									increments[statIncrement] *
+									config.scaling.dragon.type[imbuedStatType] *
+									slot.armorLevel *
+									(slot.armor.mainType == 'Accessory' || slot.armor.mainType == 'Pants' ? 0.75 : 1);
+							}
+						} else {
+							showOnlyAtlanteanStat = false;
+							for (const stat in increments) {
+								if (['warding', 'insanity', 'drawback'].includes(stat)) {
+									//Static stats
+									returnStat[stat] = increments[stat];
+								} else {
+									//Incremental Stats
+									returnStat[statRelations[stat]] = (increments[stat] * slot.armorLevel) / 10;
+								}
 							}
 						}
 					}
@@ -323,6 +342,18 @@
 									stat in config.scaling.imbuedModMulti ? stat : 'substat'
 								];
 						}
+					}
+				} else if (config.scaling.dragon.colors.includes(item.name.toLowerCase())) {
+					let imbuedStatType = findDragonImbue(slot.armor, config);
+
+					for (const statIncrement in filterData(increments)) {
+						let stat = statRelations[statIncrement];
+						returnStat[stat] =
+							config.scaling['toStat'][stat in config.scaling['toStat'] ? stat : 'substat'] *
+							increments[statIncrement] *
+							config.scaling.dragon.type[imbuedStatType] *
+							slot.armorLevel *
+							(slot.armor.mainType == 'Accessory' || slot.armor.mainType == 'Pants' ? 0.75 : 1);
 					}
 				} else {
 					for (const stat in increments) {

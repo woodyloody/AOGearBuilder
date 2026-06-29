@@ -14,6 +14,7 @@ import { getContext } from 'svelte';
 
 import type { CurrentBuild } from './CurrentBuild';
 import { floorDecimal } from '$lib/utils/floorDecimal';
+import { findDragonImbue } from '$lib/utils/calculateScaling';
 
 function clamp(value: number, min: number, max: number) {
 	return Math.max(min, Math.min(max, value));
@@ -274,8 +275,32 @@ export class ArmorSlot {
 		if (!preAtlantean) {
 			modifierCalcs: if (modifierStats.name.startsWith('Atlantean Essence')) {
 				if (modifierStats.name != 'Atlantean Essence') {
-					for (const stat in filterData(modifierStats)) {
-						finalSlotStats[statRelations[stat]] += modifierStats[stat] * levelMultiplier;
+					if (
+						this.config.scaling.dragon.colors.includes(
+							modifierStats.name
+								.replace('Atlantean Essence', '')
+								.replace('+', '')
+								.trim()
+								.toLowerCase()
+						)
+					) {
+						let imbuedStatType = findDragonImbue(this.armor, this.config);
+
+						for (const statIncrement in filterData(modifierStats)) {
+							let stat = statRelations[statIncrement];
+							finalSlotStats[stat] +=
+								this.config.scaling['toStat'][
+									stat in this.config.scaling['toStat'] ? stat : 'substat'
+								] *
+								modifierStats[statIncrement] *
+								this.config.scaling.dragon.type[imbuedStatType] *
+								this.armorLevel *
+								(this.armor.mainType == 'Accessory' || this.armor.mainType == 'Pants' ? 0.75 : 1);
+						}
+					} else {
+						for (const stat in filterData(modifierStats)) {
+							finalSlotStats[statRelations[stat]] += modifierStats[stat] * levelMultiplier;
+						}
 					}
 				}
 
@@ -326,6 +351,21 @@ export class ArmorSlot {
 								stat in this.config.scaling.imbuedModMulti ? stat : 'substat'
 							];
 					}
+				}
+			} else if (this.config.scaling.dragon.colors.includes(modifierStats.name.toLowerCase())) {
+				this.chosenAtlanteanAttribute = '';
+				let imbuedStatType = findDragonImbue(this.armor, this.config);
+
+				for (const statIncrement in filterData(modifierStats)) {
+					let stat = statRelations[statIncrement];
+					finalSlotStats[stat] +=
+						this.config.scaling['toStat'][
+							stat in this.config.scaling['toStat'] ? stat : 'substat'
+						] *
+						modifierStats[statIncrement] *
+						this.config.scaling.dragon.type[imbuedStatType] *
+						this.armorLevel *
+						(this.armor.mainType == 'Accessory' || this.armor.mainType == 'Pants' ? 0.75 : 1);
 				}
 			} else {
 				// Regular modifier calculations

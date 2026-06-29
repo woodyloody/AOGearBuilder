@@ -119,3 +119,17 @@ export function findImbue(item: anyItem, config: any): string {
 	}
 	return imbuedStatType;
 }
+
+export function findDragonImbue(item: anyItem, config: any): string {
+	let imbuedStatType = '';
+	for (let type of Object.keys(config.scaling.dragon.type)) {
+		if (
+			item.name?.toLowerCase().startsWith((type == 'normal' ? '' : type + ' ') + 'dragon') ||
+			item.name?.toLowerCase().startsWith(type + 'eye')
+		) {
+			imbuedStatType = type;
+			break;
+		}
+	}
+	return imbuedStatType;
+}
