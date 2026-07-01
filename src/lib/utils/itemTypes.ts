@@ -9,7 +9,7 @@ export type Rarities =
 	| 'Seasonal'
 	| 'Legendary';
 
-export type ArmorMainTypes = 'Accessory' | 'Chestplate' | 'Pants';
+export type ArmorMainTypes = 'Accessory' | 'Chestplate' | 'Pants' | 'Weapon';
 
 export type GemMainTypes = 'Gem';
 

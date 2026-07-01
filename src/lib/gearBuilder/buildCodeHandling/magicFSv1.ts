@@ -25,11 +25,16 @@ export function isMagicFSv1(buildCode: string) {
 
 export function loadMagicFSv1(player: Player, database: anyItem[], codeString: string) {
 	try {
-		const slotCodeArray = getBuildCode(codeString, regex)
-			.split('|')
-			.map((slotString) => slotString.split(','));
+		const slotCodeArray = codeString.split('|').map((slotString) => slotString.split(','));
 
-		const slotkeyArray = ['accessory1', 'accessory2', 'accessory3', 'chestplate', 'pants'];
+		const slotkeyArray = [
+			'accessory1',
+			'accessory2',
+			'accessory3',
+			'chestplate',
+			'pants',
+			'weapon'
+		];
 
 		try {
 			player.level = parseInt(slotCodeArray[0][0]);
@@ -77,6 +82,10 @@ export function loadMagicFSv1(player: Player, database: anyItem[], codeString: s
 		for (let i = 0; i < slotkeyArray.length; i++) {
 			const slotkey = slotkeyArray[i] as keyof typeof player.build.slots;
 			const slot = slotCodeArray[i + 3];
+
+			if (!slot) {
+				continue;
+			}
 
 			for (let j = 0; j < slot.length; j++) {
 				if (j <= 2) {

@@ -283,7 +283,7 @@
 
 						-->
 
-		{#if ['Accessory', 'Chestplate', 'Pants'].includes(item.mainType || '')}
+		{#if ['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType || '')}
 			<div class="grid grid-cols-6 md:grid-cols-12 mt-3">
 				<div class="col-span-1">
 					<div class="w-full mb-1 font-bold">Scaling</div>

@@ -34,6 +34,7 @@
 		const accessoriesList = database.filter((item) => item.mainType === 'Accessory');
 		const chestplatesList = database.filter((item) => item.mainType === 'Chestplate');
 		const pantsList = database.filter((item) => item.mainType === 'Pants');
+		const weaponList = database.filter((item) => item.mainType === 'Weapon');
 		const enchantsList = database.filter((item) => item.mainType === 'Enchant');
 		const modifiersList = database.filter((item) => item.mainType === 'Modifier');
 		const gemsList = database.filter((item) => item.mainType === 'Gem');
@@ -53,12 +54,18 @@
 				gearList = chestplatesList;
 			} else if (['pants'].includes(slotKey)) {
 				gearList = pantsList;
+			} else if (['weapon'].includes(slotKey)) {
+				gearList = weaponList;
 			}
 
 			let randomArmor = randomItemFromList(gearList, false);
 
 			while (!player.build.setGear(randomArmor, slotKey as keyof typeof playerBuildSlots)) {
 				randomArmor = randomItemFromList(gearList, false);
+			}
+
+			if (slotKey == 'weapon') {
+				continue;
 			}
 
 			// Setting enchant

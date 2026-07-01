@@ -11,7 +11,7 @@
 	import { getContext } from 'svelte';
 
 	export let item: ArmorItem | GemItem | EnchantItem | ModifierItem | any,
-		slotKey: 'accessory1' | 'accessory2' | 'accessory3' | 'chestplate' | 'pants',
+		slotKey: 'accessory1' | 'accessory2' | 'accessory3' | 'chestplate' | 'pants' | 'weapon',
 		gemIndex: boolean | number,
 		player: Player | undefined = undefined,
 		ship: CurrentShipBuild | undefined = undefined,

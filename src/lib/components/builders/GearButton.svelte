@@ -107,7 +107,7 @@
 			return a.maxLevel - b.maxLevel;
 		} else if ($sortType === 'statHighest' || $sortType === 'statLowest') {
 			//Sort item.maxLevel from Lowest to Highest
-			if (['Accessory', 'Chestplate', 'Pants'].includes(a.mainType)) {
+			if (['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(a.mainType)) {
 				if (a.statsPerLevel.length == 0 && b.statsPerLevel.length == 0) {
 					return 0;
 				} else if (b.statsPerLevel.length == 0) {

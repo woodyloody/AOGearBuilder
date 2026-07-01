@@ -315,6 +315,28 @@
 											</div>
 										</div>
 									{/if}
+									{#if ['weapon'].includes(slotKey)}
+										<div class="flex flex-col mb-10">
+											<div class="flex flex-row">
+												<GearButton
+													database={data.Database}
+													currentItem={SessionPlayer.build.slots[slotKey].armor}
+													player={SessionPlayer}
+													{slotKey}
+													gemIndex={false}
+													{updatePage}
+												/>
+
+												<div class="flex flex-col justify-center items-center">
+													<PostCalcsButton
+														slot={SessionPlayer.build.slots[slotKey]}
+														{slotKey}
+														player={SessionPlayer}
+													></PostCalcsButton>
+												</div>
+											</div>
+										</div>
+									{/if}
 								{/each}
 							</div>
 						</div>
@@ -432,23 +454,27 @@
 									<div class="flex flex-col mb-20">
 										<div class="flex flex-col items-center">
 											<div class="flex flex-row space-x-2 justify-center items-center">
-												<p class="text-xl text-white" style=" font-family: Merriweather;">Level</p>
+												{#if !['weapon'].includes(slotKey)}
+													<p class="text-xl text-white" style=" font-family: Merriweather;">
+														Level
+													</p>
 
-												<select
-													class="block w-full mt-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-													bind:value={SessionPlayer.build.slots[slotKey].armorLevel}
-													on:change={() => {
-														updatePage();
-													}}
-												>
-													{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel.filter((x) => x.level <= data.config.maxLevel)) as statsAtLevel}
-														<option
-															disabled={statsAtLevel.level > SessionPlayer.level}
-															transition:fade={{ duration: 69 }}
-															value={statsAtLevel.level}>{statsAtLevel.level}</option
-														>
-													{/each}
-												</select>
+													<select
+														class="block w-full mt-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+														bind:value={SessionPlayer.build.slots[slotKey].armorLevel}
+														on:change={() => {
+															updatePage();
+														}}
+													>
+														{#each Object.values(SessionPlayer.build.slots[slotKey].armor.statsPerLevel.filter((x) => x.level <= data.config.maxLevel)) as statsAtLevel}
+															<option
+																disabled={statsAtLevel.level > SessionPlayer.level}
+																transition:fade={{ duration: 69 }}
+																value={statsAtLevel.level}>{statsAtLevel.level}</option
+															>
+														{/each}
+													</select>
+												{/if}
 												<PostCalcsButton
 													slot={SessionPlayer.build.slots[slotKey]}
 													{slotKey}
@@ -465,37 +491,41 @@
 													{updatePage}
 												/>
 
-												<GearButton
-													database={data.Database}
-													currentItem={SessionPlayer.build.slots[slotKey].enchant}
-													player={SessionPlayer}
-													{slotKey}
-													gemIndex={false}
-													{updatePage}
-												/>
-												<GearButton
-													database={data.Database}
-													currentItem={SessionPlayer.build.slots[slotKey].modifier}
-													player={SessionPlayer}
-													{slotKey}
-													gemIndex={false}
-													{updatePage}
-												/>
+												{#if !['weapon'].includes(slotKey)}
+													<GearButton
+														database={data.Database}
+														currentItem={SessionPlayer.build.slots[slotKey].enchant}
+														player={SessionPlayer}
+														{slotKey}
+														gemIndex={false}
+														{updatePage}
+													/>
+													<GearButton
+														database={data.Database}
+														currentItem={SessionPlayer.build.slots[slotKey].modifier}
+														player={SessionPlayer}
+														{slotKey}
+														gemIndex={false}
+														{updatePage}
+													/>
+												{/if}
 											</div>
-											<div class="flex flex-row">
-												<div class="grid grid-cols-3">
-													{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
-														<GearButton
-															database={data.Database}
-															currentItem={gem}
-															player={SessionPlayer}
-															{slotKey}
-															gemIndex={parseInt(index)}
-															{updatePage}
-														/>
-													{/each}
+											{#if !['weapon'].includes(slotKey)}
+												<div class="flex flex-row">
+													<div class="grid grid-cols-3">
+														{#each Object.values(SessionPlayer.build.slots[slotKey].gems) as gem, index}
+															<GearButton
+																database={data.Database}
+																currentItem={gem}
+																player={SessionPlayer}
+																{slotKey}
+																gemIndex={parseInt(index)}
+																{updatePage}
+															/>
+														{/each}
+													</div>
 												</div>
-											</div>
+											{/if}
 										</div>
 									</div>
 								{/each}

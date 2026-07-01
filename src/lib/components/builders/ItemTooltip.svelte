@@ -176,7 +176,7 @@
 	if (player) {
 		if (isItemMenu) {
 			if (
-				['Accessory', 'Chestplate', 'Pants'].includes(item.mainType) &&
+				['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType) &&
 				item.hasOwnProperty('statsPerLevel')
 			) {
 				if (item.statsPerLevel.length > 1) {

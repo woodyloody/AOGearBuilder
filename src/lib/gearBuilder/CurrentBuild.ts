@@ -23,6 +23,7 @@ export class CurrentBuild {
 		accessory3: ArmorSlot;
 		chestplate: ArmorSlot;
 		pants: ArmorSlot;
+		weapon: ArmorSlot;
 	};
 
 	constructor(parentPlayer: Player) {
@@ -46,6 +47,10 @@ export class CurrentBuild {
 
 		const noneModifier = this.database.find(
 			(item) => item.name === 'None' && item.mainType === 'Modifier'
+		);
+
+		const noneWeapon = this.database.find(
+			(item) => item.name === 'None' && item.mainType === 'Weapon'
 		);
 
 		this.slots = {
@@ -76,6 +81,12 @@ export class CurrentBuild {
 			pants: new ArmorSlot(
 				this,
 				nonePants as ArmorItem,
+				noneEnchant as EnchantItem,
+				noneModifier as ModifierItem
+			),
+			weapon: new ArmorSlot(
+				this,
+				noneWeapon as ArmorItem,
 				noneEnchant as EnchantItem,
 				noneModifier as ModifierItem
 			)
@@ -121,7 +132,8 @@ export class CurrentBuild {
 			this.slots.accessory2.getSlotStats(),
 			this.slots.accessory3.getSlotStats(),
 			this.slots.chestplate.getSlotStats(),
-			this.slots.pants.getSlotStats()
+			this.slots.pants.getSlotStats(),
+			this.slots.weapon.getSlotStats()
 		];
 
 		for (const slotStats of currentGearSlotStats) {
@@ -140,7 +152,7 @@ export class CurrentBuild {
 		for (const slotKey of Object.keys(this.slots)) {
 			const slot: ArmorSlot = this.slots[slotKey as keyof typeof this.slots];
 
-			if (['Accessory', 'Chestplate', 'Pants'].includes(item.mainType)) {
+			if (['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType)) {
 				//Gears validation handling
 
 				const strictlySingleSubtypes: string[] = ['Amulet', 'Helmet'];
@@ -208,7 +220,7 @@ export class CurrentBuild {
 
 	setGear(item: anyItem, slotKey: keyof typeof this.slots, gemIndex: number | boolean = false) {
 		if (this.validateItem(item, slotKey) || item.name == 'None') {
-			if (['Accessory', 'Chestplate', 'Pants'].includes(item.mainType)) {
+			if (['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType)) {
 				this.slots[slotKey].setArmor(item as ArmorItem);
 			} else if (item.mainType == 'Enchant') {
 				this.slots[slotKey].setEnchant(item as EnchantItem);

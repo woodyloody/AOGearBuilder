@@ -249,6 +249,14 @@
 				modifiable: true,
 				isShip: false
 			},
+			Weapon: {
+				levelVisibility: true,
+				subTypes: null,
+				statTypes: null,
+				gemVisibility: false,
+				modifiable: false,
+				isShip: false
+			},
 			Gem: {
 				levelVisibility: false,
 				subTypes: null,
@@ -472,7 +480,7 @@
 		) {
 			item.subType = 'None';
 		}
-		if (['Accessory', 'Chestplate', 'Pants', 'Gem'].includes(item.mainType)) {
+		if (['Accessory', 'Chestplate', 'Pants', 'Weapon', 'Gem'].includes(item.mainType)) {
 			validCategories = mainTypeStats.gearStatic;
 		} else if (['Modifier'].includes(item.mainType)) {
 			validCategories = mainTypeStats.gearIncrement;
@@ -519,7 +527,7 @@
 			tempItem.scaling = scalingTableData;
 		}
 
-		if (['Accessory', 'Chestplate', 'Pants'].includes(item.mainType)) {
+		if (['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType)) {
 			tempItem.subType = item.subType;
 			tempItem.statType = item.statType;
 			tempItem.gemNo = item.gemNo;
@@ -833,7 +841,7 @@
 
 						-->
 
-						{#if ['Accessory', 'Chestplate', 'Pants'].includes(item.mainType || '')}
+						{#if ['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType || '')}
 							<div class="grid grid-cols-6 md:grid-cols-12">
 								<div class="col-span-1">
 									<div class="w-full mb-1 font-bold">Scaling</div>

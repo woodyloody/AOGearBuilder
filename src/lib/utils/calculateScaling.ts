@@ -10,7 +10,7 @@ export function calculateItemScaling(item: anyItem, config: any): anyItem {
 	if (
 		'scaling' in item &&
 		'toStat' in config.scaling &&
-		['Accessory', 'Chestplate', 'Pants'].includes(item.mainType || '')
+		['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType || '')
 	) {
 		let stats = Object.keys(item.scaling);
 		let imbuedStatType = findImbue(item, config);
@@ -62,7 +62,7 @@ export function calculateStatScaling(
 		!(
 			'scaling' in item &&
 			'toStat' in config.scaling &&
-			['Accessory', 'Chestplate', 'Pants'].includes(item.mainType || '')
+			['Accessory', 'Chestplate', 'Pants', 'Weapon'].includes(item.mainType || '')
 		)
 	) {
 		return value;
