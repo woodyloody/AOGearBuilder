@@ -12,6 +12,8 @@
 	import { savantChoiceStore, savantChoices } from '$lib/gearBuilder/savantChoiceStore';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+	import { dragonbloodBlessings } from '$lib/dataConstants';
+	import HealthTooltip from './HealthTooltip.svelte';
 
 	export let player: Player, updatePage: any;
 
@@ -71,6 +73,11 @@
 
 	$: {
 		player.level = clamp(player.level, player.minLevel, player.maxLevel);
+		player.blessing = clamp(
+			player.blessing,
+			Object.keys(dragonbloodBlessings).map(Number)[0],
+			Object.keys(dragonbloodBlessings).map(Number).at(-1) || 0
+		);
 
 		baseHealth = 91 + player.level * 9;
 		player.updateHealth();
@@ -182,17 +189,20 @@
 								>
 							</div>
 						</div>
-						<div class="flex flex-row text-white">
-							<p style="font-family: Merriweather;" class="text-xl m-3">Health :</p>
-							<p style="font-family: Merriweather;" class=" text-green-500 text-xl m-3">
-								{player.health}
+						<div class="flex flex-row items-center">
+							<p style="font-family: Merriweather;" class=" text-white text-xl m-3">
+								Dragonblood Tier <input
+									type="number"
+									class="text-black m-2 p-2"
+									min={Object.keys(dragonbloodBlessings).map(Number)[0]}
+									max={Object.keys(dragonbloodBlessings).map(Number).at(-1)}
+									on:change={updateComponent}
+									bind:value={player.blessing}
+								/>
 							</p>
 						</div>
 						<div class="flex flex-row text-white">
-							<p style="font-family: Merriweather;" class="text-xl m-3">Base Health :</p>
-							<p style="font-family: Merriweather;" class=" text-green-200 text-xl m-3">
-								{baseHealth}
-							</p>
+							<HealthTooltip {player} />
 						</div>
 					</div>
 				</div>
@@ -348,21 +358,20 @@
 							>
 						</div>
 					</div>
-					<div class="flex flex-row text-white my-2 items-center justify-center">
-						<p style="font-family: Merriweather;" class="text-xl">
-							Health :
-							<span style="font-family: Merriweather;" class=" text-green-500 text-xl">
-								{player.health}</span
-							>
+					<div class="flex flex-row items-center justify-center">
+						<p style="font-family: Merriweather;" class=" text-white text-xl m-3">
+							Dragonblood Tier <input
+								type="number"
+								class="text-black m-2 p-2"
+								min={Object.keys(dragonbloodBlessings).map(Number)[0]}
+								max={Object.keys(dragonbloodBlessings).map(Number).at(-1)}
+								on:change={updateComponent}
+								bind:value={player.blessing}
+							/>
 						</p>
 					</div>
 					<div class="flex flex-row text-white my-2 items-center justify-center">
-						<p style="font-family: Merriweather;" class="text-xl">
-							Base Health :
-							<span style="font-family: Merriweather;" class=" text-green-200 text-xl">
-								{baseHealth}</span
-							>
-						</p>
+						<HealthTooltip {player} />
 					</div>
 				</div>
 

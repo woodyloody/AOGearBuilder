@@ -153,3 +153,14 @@ export const newStatNames: Record<string, string> = {
 	intensity: 'haste',
 	piercing: 'pierce'
 };
+
+export const dragonbloodBlessings: Record<number, number> = {
+	0: 0,
+	1: 0.02,
+	2: 0.04,
+	3: 0.08,
+	4: 0.12,
+	5: 0.16,
+	6: 0.18,
+	7: 0.2
+};

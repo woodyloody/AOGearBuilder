@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 import { CurrentBuild } from './CurrentBuild';
 import type { fightingStyle, magic, statBuildStats } from './playerTypes';
 import { getItemById } from '../utils/getItemById';
-import { listOfMagics } from '../dataConstants';
+import { dragonbloodBlessings, listOfMagics } from '../dataConstants';
 import { loadOldCode } from './buildCodeHandling/legacyCode';
 import { isLegacyArmorBuild } from './buildCodeHandling/legacyCode';
 import { clamp } from '$lib/utils/clamp';
@@ -13,6 +13,7 @@ import { fightingStyleRecords, listOfFightingStyles } from '$lib/data/playerFigh
 import { isPreMagicFSBuildCode, loadPreMagicFSBuildCode } from './buildCodeHandling/preMagicFS';
 import { savantChoiceStore } from './savantChoiceStore';
 import { isMagicFSv1, loadMagicFSv1 } from './buildCodeHandling/magicFSv1';
+import { floorDecimal } from '$lib/utils/floorDecimal';
 
 export class Player {
 	database: anyItem[] = [];
@@ -34,6 +35,8 @@ export class Player {
 	magicPoints: number;
 	strengthPoints: number;
 	weaponPoints: number;
+
+	blessing: number;
 
 	constructor(
 		database: anyItem[],
@@ -69,6 +72,8 @@ export class Player {
 
 		this.magics = magics;
 		this.fightingStyles = fightingStyles;
+
+		this.blessing = 0;
 	}
 
 	fixLevel() {
@@ -129,7 +134,10 @@ export class Player {
 
 	updateHealth() {
 		const baseHealth = 91 + this.level * 9;
-		this.health = baseHealth + this.build.getBuildStats().defense;
+		this.health = baseHealth + floorDecimal(this.build.getBuildStats().defense, 1);
+		if (this.blessing) {
+			this.health += baseHealth * floorDecimal(dragonbloodBlessings[this.blessing], 2);
+		}
 	}
 
 	updateStatBuild() {
@@ -310,7 +318,8 @@ export class Player {
 			this.vitalityPoints.toString(),
 			this.magicPoints.toString(),
 			this.strengthPoints.toString(),
-			this.weaponPoints.toString()
+			this.weaponPoints.toString(),
+			this.blessing.toString()
 		].join(',');
 
 		const magicsString = this.magics

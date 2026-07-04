@@ -42,6 +42,9 @@ export function loadMagicFSv1(player: Player, database: anyItem[], codeString: s
 			player.magicPoints = parseInt(slotCodeArray[0][2]);
 			player.strengthPoints = parseInt(slotCodeArray[0][3]);
 			player.weaponPoints = parseInt(slotCodeArray[0][4]);
+			if (slotCodeArray[0][5]) {
+				player.blessing = parseInt(slotCodeArray[0][5]);
+			}
 		} catch (e) {
 			console.log(
 				e,
