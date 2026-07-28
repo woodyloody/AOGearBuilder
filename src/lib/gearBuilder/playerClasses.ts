@@ -52,7 +52,7 @@ export class Player {
 		statBuild: statBuildStats = statBuilds['None'],
 
 		magics: magic[] = ['Acid'],
-		fightingStyles: fightingStyle[] = []
+		fightingStyles: fightingStyle[] = ['Basic Combat']
 	) {
 		this.database = database;
 		this.level = level;
