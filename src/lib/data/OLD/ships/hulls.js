@@ -260,6 +260,7 @@ const hullsData = [
 		rarityColor: '#7D7D7F',
 		imageId: 'https://i.imgur.com/e01g2lc.jpg'
 	},
+
 	{
 		id: 13,
 		name: 'Ruined Archaic Hull',
